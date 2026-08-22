@@ -26,8 +26,8 @@ public class Plan {
     @Column(columnDefinition = "TEXT")
     private String descripcion;
 
-    // Se utiliza "BigDecimal" para el precio porque es el estándar de Java para
-    // manejar plata de forma exacta.
+    /* Se utiliza "BigDecimal" para el precio porque es el estándar de Java para manejar plata de forma exacta. 
+    Se permite: 8 dígitos enteros y 2 decimales. */
     @Column(name = "precio_mensual", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioMensual;
 

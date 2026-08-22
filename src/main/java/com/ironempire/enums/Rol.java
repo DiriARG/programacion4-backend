@@ -1,6 +1,6 @@
 package com.ironempire.enums;
 
-public enum RolEnum {
+public enum Rol {
     ALUMNO,
     PROFESOR,
     ADMIN_GESTION,

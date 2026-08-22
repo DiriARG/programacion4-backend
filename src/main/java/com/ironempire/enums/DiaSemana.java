@@ -1,6 +1,6 @@
 package com.ironempire.enums;
 
-public enum DiaSemanaEnum {
+public enum DiaSemana {
     LUNES,
     MARTES,
     MIERCOLES,

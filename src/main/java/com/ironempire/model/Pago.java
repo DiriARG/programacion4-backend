@@ -14,7 +14,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "pago")
+/* Restricción de unicidad que refuerza la regla de negocio de un único pago por alumno y período. 
+El período se determina mediante la fecha de vencimiento, que corresponde al día 10 del mes. */
+@Table(name = "pago", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_pago_alumno_periodo", columnNames = { "alumno_id", "fecha_vencimiento" })
+})
 public class Pago {
 
     @Id

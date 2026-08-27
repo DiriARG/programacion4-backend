@@ -21,11 +21,11 @@ public class RutinaEjercicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rutina_id", nullable = false)
     private Rutina rutina;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ejercicio_id", nullable = false)
     private Ejercicio ejercicio;
 

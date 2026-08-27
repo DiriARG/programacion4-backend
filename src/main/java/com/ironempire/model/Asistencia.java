@@ -21,16 +21,16 @@ public class Asistencia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "alumno_id", nullable = false)
     private Usuario alumno;
     
     // Opcional: una asistencia puede estar asociada a un turno o corresponder a un entrenamiento libre (turno nulo).
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "turno_id")
     private Turno turno;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "registrado_por", nullable = false)
     private Usuario registradoPor;
 

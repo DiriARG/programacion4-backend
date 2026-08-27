@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-// Refuerza la regla de negocio que impide insicribir al mismo alumno más de una vez en un mismo turno.
+// Refuerza la regla de negocio que impide inscribir al mismo alumno más de una vez en un mismo turno.
 @Table(name = "alumno_turno", uniqueConstraints = {
         @UniqueConstraint(name = "uk_alumno_turno", columnNames = { "alumno_id", "turno_id" })
 })
@@ -21,11 +21,11 @@ public class AlumnoTurno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "alumno_id", nullable = false)
     private Usuario alumno;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "turno_id", nullable = false)
     private Turno turno;
 }

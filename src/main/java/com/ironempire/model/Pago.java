@@ -14,8 +14,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-/* Restricción de unicidad que refuerza la regla de negocio de un único pago por alumno y período. 
-El período se determina mediante la fecha de vencimiento, que corresponde al día 10 del mes. */
+/*
+ * Restricción de unicidad que refuerza la regla de negocio de un único pago por
+ * alumno y período.
+ * El período se determina mediante la fecha de vencimiento, que corresponde al
+ * día 10 del mes.
+ */
 @Table(name = "pago", uniqueConstraints = {
         @UniqueConstraint(name = "uk_pago_alumno_periodo", columnNames = { "alumno_id", "fecha_vencimiento" })
 })
@@ -25,11 +29,13 @@ public class Pago {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    // LAZY evita cargar las entidades relacionadas hasta que sean necesarias,
+    // reduciendo la carga de datos innecesaria al consultar esta entidad.
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "alumno_id", nullable = false)
     private Usuario alumno;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", nullable = false)
     private Plan plan;
 

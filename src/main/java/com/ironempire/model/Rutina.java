@@ -20,11 +20,11 @@ public class Rutina {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "alumno_id", nullable = false)
     private Usuario alumno;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profesor_id", nullable = false)
     private Usuario profesor;
 

@@ -34,7 +34,7 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String dni;
 
-    // No necesita "@Column" porque no requiere ninguna configuración especial.
+    @Column(nullable = false)
     private String telefono;
 
     @Column(nullable = false)

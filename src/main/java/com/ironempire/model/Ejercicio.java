@@ -20,7 +20,6 @@ public class Ejercicio {
 
     @Column(nullable = false)
     private String nombre;
-
     @Column(name = "grupo_muscular", nullable = false)
     private String grupoMuscular;
 

@@ -3,6 +3,7 @@ package com.ironempire.service.usuario;
 import com.ironempire.dto.request.usuario.CrearUsuarioRequest;
 import com.ironempire.dto.response.usuario.UsuarioResponse;
 import com.ironempire.enums.Rol;
+import com.ironempire.exception.RecursoExistenteException;
 import com.ironempire.model.Usuario;
 import com.ironempire.repository.JpaUsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,11 +52,11 @@ public class CrearUsuarioService {
 
         // Validaciones.
         if (usuarioRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("El email ingresado ya se encuentra registrado.");
+            throw new RecursoExistenteException("El email ingresado ya se encuentra registrado.");
         }
 
         if (usuarioRepository.existsByDni(request.getDni())) {
-            throw new IllegalArgumentException("El DNI ingresado ya se encuentra registrado.");
+            throw new RecursoExistenteException("El DNI ingresado ya se encuentra registrado.");
         }
 
         // Se crea el nuevo objeto "Usuario" copiando los datos que brindó el

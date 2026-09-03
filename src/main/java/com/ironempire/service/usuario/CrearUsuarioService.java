@@ -20,7 +20,7 @@ public class CrearUsuarioService {
     private final PasswordEncoder passwordEncoder;
 
     /*
-     * "crearAlumno" y "crearProfesor" son métodos públicos porque pueden ser
+     * "crearAlumno", "crearProfesor" y "crearAdminGestion" son métodos públicos porque pueden ser
      * utilizados desde un controlador.
      * Se utiliza "@Transactional" porque la operación
      * completa (verificar email, verificar dni, construir usuario, etc) es una
@@ -38,6 +38,11 @@ public class CrearUsuarioService {
         return procesarCreacion(request, Rol.PROFESOR);
     }
 
+    @Transactional
+    public UsuarioResponse crearAdminGestion(CrearUsuarioRequest request) {
+        return procesarCreacion(request, Rol.ADMIN_GESTION);
+    }
+
     /*
      * Acá esta el método privado que contiene la lógica común para crear cualquier
      * tipo de usuario.
@@ -45,11 +50,9 @@ public class CrearUsuarioService {
      * - request: El objeto que trae los datos escritos por el usuario.
      * - rolAsignado: rol que el backend decidió asignarle.
      * Es "private" para que ningun controller pueda invocarlo directamente. Los
-     * únicos puntos de entrada son: crearAlumno() y crearProfesor().
+     * únicos puntos de entrada son: crearAlumno(), crearProfesor() y crearAdminGestion().
      */
-
     private UsuarioResponse procesarCreacion(CrearUsuarioRequest request, Rol rolAsignado) {
-
         // Validaciones.
         if (usuarioRepository.existsByEmail(request.getEmail())) {
             throw new RecursoExistenteException("El email ingresado ya se encuentra registrado.");

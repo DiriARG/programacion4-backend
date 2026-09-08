@@ -9,13 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/auth/login")
 @RequiredArgsConstructor
 public class LoginController {
 
     private final LoginService loginService;
 
-    @PostMapping("/login")
+    @PostMapping
     public ResponseEntity<LoginResponse> login(
             @Valid @RequestBody LoginRequest request) {
 

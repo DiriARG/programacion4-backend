@@ -1,5 +1,6 @@
 package com.ironempire.repository;
 
+import com.ironempire.enums.Rol;
 import com.ironempire.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
@@ -24,4 +25,6 @@ public interface JpaUsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByEmail(String email);
 
     boolean existsByDni(String dni);
+
+    boolean existsByRolAndActivoTrue(Rol rol);
 }

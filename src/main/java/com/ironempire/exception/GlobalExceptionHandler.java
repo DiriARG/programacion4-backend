@@ -3,6 +3,8 @@ package com.ironempire.exception;
 import com.ironempire.dto.response.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -57,6 +59,38 @@ public class GlobalExceptionHandler {
 
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)
+                                .body(response);
+        }
+
+        @ExceptionHandler(BadCredentialsException.class)
+        public ResponseEntity<ErrorResponse> manejarCredencialesInvalidas(
+                        BadCredentialsException exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.UNAUTHORIZED.value(),
+                                HttpStatus.UNAUTHORIZED.getReasonPhrase(),
+                                "Las credenciales ingresadas no son válidas.",
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.UNAUTHORIZED)
+                                .body(response);
+        }
+
+        @ExceptionHandler(DisabledException.class)
+        public ResponseEntity<ErrorResponse> manejarUsuarioDeshabilitado(
+                        DisabledException exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.UNAUTHORIZED.value(),
+                                HttpStatus.UNAUTHORIZED.getReasonPhrase(),
+                                "Las credenciales ingresadas no son válidas.",
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.UNAUTHORIZED)
                                 .body(response);
         }
 }

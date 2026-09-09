@@ -2,9 +2,9 @@ package com.ironempire.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -17,6 +17,8 @@ import com.ironempire.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+// Activa el @PreAuthorize en los controladores.
+@EnableMethodSecurity
 public class SeguridadConfig {
 
         @Bean
@@ -57,23 +59,6 @@ public class SeguridadConfig {
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers("/api/auth/**")
                                                 .permitAll()
-
-                                                .requestMatchers(
-                                                                HttpMethod.POST,
-                                                                "/api/usuarios/admin-gestion")
-                                                .hasRole("ADMIN_GENERAL")
-
-                                                .requestMatchers(
-                                                                HttpMethod.POST,
-                                                                "/api/usuarios/alumnos")
-                                                .hasAnyRole(
-                                                                "ADMIN_GESTION",
-                                                                "ADMIN_GENERAL")
-
-                                                .requestMatchers(
-                                                                HttpMethod.POST,
-                                                                "/api/usuarios/profesores")
-                                                .hasRole("ADMIN_GENERAL")
 
                                                 .anyRequest()
                                                 .authenticated())

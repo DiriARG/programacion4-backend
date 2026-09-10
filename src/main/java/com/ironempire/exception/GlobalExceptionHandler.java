@@ -93,4 +93,37 @@ public class GlobalExceptionHandler {
                                 .status(HttpStatus.UNAUTHORIZED)
                                 .body(response);
         }
+
+        @ExceptionHandler(RecursoNoEncontradoException.class)
+        public ResponseEntity<ErrorResponse> manejarRecursoNoEncontrado(
+                        RecursoNoEncontradoException exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.NOT_FOUND.value(),
+                                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                                exception.getMessage(),
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.NOT_FOUND)
+                                .body(response);
+        }
+
+        @ExceptionHandler(RecursoInvalidoException.class)
+        public ResponseEntity<ErrorResponse> manejarRecursoInvalido(
+                        RecursoInvalidoException exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.BAD_REQUEST.value(),
+                                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                                exception.getMessage(),
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.BAD_REQUEST)
+                                .body(response);
+        }
+
 }

@@ -35,6 +35,15 @@ public class ConsultarUsuarioService {
         return procesarConsulta(id, Rol.ADMIN_GESTION, "administrador de gestión");
     }
 
+    @Transactional(readOnly = true)
+    public UsuarioResponse consultarPerfilPropio(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RecursoNoEncontradoException(
+                        "No se encontró el perfil del usuario autenticado."));
+
+        return convertirAResponse(usuario);
+    }
+
     private UsuarioResponse procesarConsulta(
             Long id,
             Rol rolEsperado,
@@ -53,7 +62,7 @@ public class ConsultarUsuarioService {
         return convertirAResponse(usuario);
     }
 
-    // Evita código duplicado cuando se agregue el caso de uso CU-AL-01.
+    // Evita código duplicado para el caso de uso transversal CU-U-01.
     private UsuarioResponse convertirAResponse(Usuario usuario) {
 
         UsuarioResponse response = new UsuarioResponse();

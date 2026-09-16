@@ -4,6 +4,7 @@ import com.ironempire.dto.request.usuario.CrearUsuarioRequest;
 import com.ironempire.dto.response.usuario.UsuarioResponse;
 import com.ironempire.enums.Rol;
 import com.ironempire.exception.RecursoExistenteException;
+import com.ironempire.mapper.UsuarioMapper;
 import com.ironempire.model.Usuario;
 import com.ironempire.repository.JpaUsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,11 @@ public class CrearUsuarioService {
     private final JpaUsuarioRepository usuarioRepository;
     // El PasswordEncoder se utiliza para convertir la contraseña en un hash seguro.
     private final PasswordEncoder passwordEncoder;
+    private final UsuarioMapper usuarioMapper;
 
     /*
-     * "crearAlumno", "crearProfesor" y "crearAdminGestion" son métodos públicos porque pueden ser
-     * utilizados desde un controlador.
+     * "crearAlumno", "crearProfesor" y "crearAdminGestion" son métodos públicos
+     * porque pueden ser utilizados desde un controlador.
      * Se utiliza "@Transactional" porque la operación
      * completa (verificar email, verificar dni, construir usuario, etc) es una
      * única operación de negocio, ademas que garantiza que sea atómica.
@@ -50,7 +52,8 @@ public class CrearUsuarioService {
      * - request: El objeto que trae los datos escritos por el usuario.
      * - rolAsignado: rol que el backend decidió asignarle.
      * Es "private" para que ningun controller pueda invocarlo directamente. Los
-     * únicos puntos de entrada son: crearAlumno(), crearProfesor() y crearAdminGestion().
+     * únicos puntos de entrada son: crearAlumno(), crearProfesor() y
+     * crearAdminGestion().
      */
     private UsuarioResponse procesarCreacion(CrearUsuarioRequest request, Rol rolAsignado) {
         // Validaciones.
@@ -62,8 +65,7 @@ public class CrearUsuarioService {
             throw new RecursoExistenteException("El DNI ingresado ya se encuentra registrado.");
         }
 
-        // Se crea el nuevo objeto "Usuario" copiando los datos que brindó el
-        // cliente.
+        // Se crea el nuevo objeto "Usuario" copiando los datos que brindó el cliente.
         Usuario nuevoUsuario = new Usuario();
         nuevoUsuario.setNombre(request.getNombre());
         nuevoUsuario.setApellido(request.getApellido());
@@ -84,20 +86,10 @@ public class CrearUsuarioService {
         Usuario usuarioGuardado = usuarioRepository.save(nuevoUsuario);
 
         /*
-         * No se devuelve directamente la entidad Usuario, sino un UsuarioResponse,
-         * evitando mostrar info comprometedora en la respuesta como
+         * No se devuelve directamente la entidad Usuario, sino un UsuarioResponse (está
+         * dentro del mapper), evitando mostrar info comprometedora en la respuesta como
          * por ej passwordHash.
          */
-        UsuarioResponse response = new UsuarioResponse();
-        response.setId(usuarioGuardado.getId());
-        response.setNombre(usuarioGuardado.getNombre());
-        response.setApellido(usuarioGuardado.getApellido());
-        response.setDni(usuarioGuardado.getDni());
-        response.setEmail(usuarioGuardado.getEmail());
-        response.setTelefono(usuarioGuardado.getTelefono());
-        response.setRol(usuarioGuardado.getRol());
-        response.setActivo(usuarioGuardado.getActivo());
-
-        return response;
+        return usuarioMapper.convertirAResponse(usuarioGuardado);
     }
 }

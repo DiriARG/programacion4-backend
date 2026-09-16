@@ -1,7 +1,7 @@
 package com.ironempire.controller.usuario;
 
 import com.ironempire.dto.response.usuario.UsuarioResponse;
-import com.ironempire.service.usuario.ConsultarUsuarioService;
+import com.ironempire.service.usuario.ConsultarPerfilPropioService;
 import lombok.RequiredArgsConstructor;
 
 import java.security.Principal;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ConsultarPerfilPropioController {
 
-    private final ConsultarUsuarioService consultarUsuarioService;
+    private final ConsultarPerfilPropioService consultarPerfilPropioService;
 
     @GetMapping("/perfil")
     // Para que pueda ser ejecutado por cualquiera de los cuatro roles autenticados.
@@ -30,7 +30,7 @@ public class ConsultarPerfilPropioController {
          */
         String email = principal.getName();
 
-        UsuarioResponse response = consultarUsuarioService.consultarPerfilPropio(email);
+        UsuarioResponse response = consultarPerfilPropioService.consultarPerfilPropio(email);
 
         return ResponseEntity.ok(response);
     }

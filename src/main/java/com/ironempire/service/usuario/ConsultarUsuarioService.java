@@ -2,9 +2,7 @@ package com.ironempire.service.usuario;
 
 import com.ironempire.dto.response.usuario.UsuarioResponse;
 import com.ironempire.enums.Rol;
-import com.ironempire.exception.RecursoNoEncontradoException;
 import com.ironempire.model.Usuario;
-import com.ironempire.repository.JpaUsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,12 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ConsultarUsuarioService {
 
-    private final JpaUsuarioRepository usuarioRepository;
     private final ValidarUsuarioService validarUsuarioService;
 
     /*
-     * "readOnly" es una buena práctica en métodos de consulta, ya que indica que
-     * la transacción es de solo lectura y permite aplicar optimizaciones.
+     * "readOnly" indica que la transacción se utiliza para realizar operaciones
+     * de lectura y no para modificar datos.
      */
     @Transactional(readOnly = true)
     public UsuarioResponse consultarAlumno(Long id) {
@@ -35,27 +32,12 @@ public class ConsultarUsuarioService {
         return procesarConsulta(id, Rol.ADMIN_GESTION, "administrador de gestión");
     }
 
-    @Transactional(readOnly = true)
-    public UsuarioResponse consultarPerfilPropio(String email) {
-        Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RecursoNoEncontradoException(
-                        "No se encontró el perfil del usuario autenticado."));
-
-        return convertirAResponse(usuario);
-    }
-
     private UsuarioResponse procesarConsulta(
             Long id,
             Rol rolEsperado,
             String nombreRecurso) {
 
         Usuario usuario = validarUsuarioService.validarUsuario(id, rolEsperado, nombreRecurso);
-
-        return convertirAResponse(usuario);
-    }
-
-    // Evita código duplicado para el caso de uso transversal CU-U-01.
-    private UsuarioResponse convertirAResponse(Usuario usuario) {
 
         UsuarioResponse response = new UsuarioResponse();
 
@@ -70,4 +52,5 @@ public class ConsultarUsuarioService {
 
         return response;
     }
+
 }

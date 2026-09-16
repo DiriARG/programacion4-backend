@@ -4,6 +4,7 @@ import com.ironempire.dto.request.usuario.ModificarUsuarioRequest;
 import com.ironempire.dto.response.usuario.UsuarioResponse;
 import com.ironempire.enums.Rol;
 import com.ironempire.exception.RecursoExistenteException;
+import com.ironempire.mapper.UsuarioMapper;
 import com.ironempire.model.Usuario;
 import com.ironempire.repository.JpaUsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class ModificarUsuarioService {
 
     private final JpaUsuarioRepository usuarioRepository;
     private final ValidarUsuarioService validarUsuarioService;
+    private final UsuarioMapper usuarioMapper;
 
     @Transactional
     public UsuarioResponse modificarAlumno(Long id, ModificarUsuarioRequest request) {
@@ -57,16 +59,6 @@ public class ModificarUsuarioService {
 
         Usuario usuarioGuardado = usuarioRepository.save(usuario);
 
-        UsuarioResponse response = new UsuarioResponse();
-        response.setId(usuarioGuardado.getId());
-        response.setNombre(usuarioGuardado.getNombre());
-        response.setApellido(usuarioGuardado.getApellido());
-        response.setDni(usuarioGuardado.getDni());
-        response.setEmail(usuarioGuardado.getEmail());
-        response.setTelefono(usuarioGuardado.getTelefono());
-        response.setRol(usuarioGuardado.getRol());
-        response.setActivo(usuarioGuardado.getActivo());
-
-        return response;
+        return usuarioMapper.convertirAResponse(usuarioGuardado);
     }
 }

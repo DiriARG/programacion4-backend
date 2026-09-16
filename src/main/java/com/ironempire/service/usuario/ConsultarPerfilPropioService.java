@@ -2,6 +2,7 @@ package com.ironempire.service.usuario;
 
 import com.ironempire.dto.response.usuario.UsuarioResponse;
 import com.ironempire.exception.RecursoNoEncontradoException;
+import com.ironempire.mapper.UsuarioMapper;
 import com.ironempire.model.Usuario;
 import com.ironempire.repository.JpaUsuarioRepository;
 
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ConsultarPerfilPropioService {
 
     private final JpaUsuarioRepository usuarioRepository;
+    private final UsuarioMapper usuarioMapper;
 
     @Transactional(readOnly = true)
     public UsuarioResponse consultarPerfilPropio(String email) {
@@ -22,17 +24,6 @@ public class ConsultarPerfilPropioService {
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "No se encontró el perfil del usuario autenticado."));
 
-        UsuarioResponse response = new UsuarioResponse();
-
-        response.setId(usuario.getId());
-        response.setNombre(usuario.getNombre());
-        response.setApellido(usuario.getApellido());
-        response.setDni(usuario.getDni());
-        response.setEmail(usuario.getEmail());
-        response.setTelefono(usuario.getTelefono());
-        response.setRol(usuario.getRol());
-        response.setActivo(usuario.getActivo());
-
-        return response;
+        return usuarioMapper.convertirAResponse(usuario);
     }
 }

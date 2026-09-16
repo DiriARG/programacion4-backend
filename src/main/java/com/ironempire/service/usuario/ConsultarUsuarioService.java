@@ -2,7 +2,6 @@ package com.ironempire.service.usuario;
 
 import com.ironempire.dto.response.usuario.UsuarioResponse;
 import com.ironempire.enums.Rol;
-import com.ironempire.exception.RecursoInvalidoException;
 import com.ironempire.exception.RecursoNoEncontradoException;
 import com.ironempire.model.Usuario;
 import com.ironempire.repository.JpaUsuarioRepository;
@@ -15,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ConsultarUsuarioService {
 
     private final JpaUsuarioRepository usuarioRepository;
+    private final ValidarUsuarioService validarUsuarioService;
 
     /*
      * "readOnly" es una buena práctica en métodos de consulta, ya que indica que
@@ -49,15 +49,7 @@ public class ConsultarUsuarioService {
             Rol rolEsperado,
             String nombreRecurso) {
 
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RecursoNoEncontradoException(
-                        "No se encontró un " + nombreRecurso
-                                + " con el ID ingresado."));
-
-        if (usuario.getRol() != rolEsperado) {
-            throw new RecursoInvalidoException(
-                    "El usuario indicado no es un " + nombreRecurso + ".");
-        }
+        Usuario usuario = validarUsuarioService.validarUsuario(id, rolEsperado, nombreRecurso);
 
         return convertirAResponse(usuario);
     }

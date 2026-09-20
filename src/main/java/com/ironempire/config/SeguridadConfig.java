@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -48,7 +49,11 @@ public class SeguridadConfig {
                                  * mediante Cookies.
                                  */
                                 .csrf(csrf -> csrf.disable())
-
+                                /*
+                                 * Habilita CORS en Spring Security buscando automáticamente un Bean de tipo
+                                 * CorsConfigurationSource registrado en el contexto (CorsConfig).
+                                 */
+                                .cors(Customizer.withDefaults())
                                 /*
                                  * Configura la API como "Stateless" (sin estado) para que el servidor no guarde
                                  * sesiones en memoria.

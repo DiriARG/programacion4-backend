@@ -20,7 +20,7 @@ public class CorsConfig {
 
         /*
          * "OPTIONS" es necesario para las solicitudes "pre-flight" que el navegador
-         * navegador realiza automáticamente antes de un POST, PUT o DELETE.
+         * realiza automáticamente antes de un POST, PUT o DELETE.
          */
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
 
@@ -30,10 +30,7 @@ public class CorsConfig {
         // Tiempo de caché para las peticiones pre-flight.
         configuration.setMaxAge(3600L);
 
-        /*
-         * Aplica esta configuración de CORS a todas las rutas de la aplicación.
-         * El patrón "/**" coincide con cualquier URL de la aplicación.
-         */
+        // Aplica esta configuración de CORS a todas las rutas de la aplicación.
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

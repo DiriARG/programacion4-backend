@@ -2,13 +2,13 @@ package com.ironempire.service.plan;
 
 import com.ironempire.dto.response.plan.PlanResponse;
 import com.ironempire.exception.RecursoNoEncontradoException;
+import com.ironempire.mapper.PlanMapper;
 import com.ironempire.model.Plan;
 import com.ironempire.repository.JpaPlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,6 +16,7 @@ import java.util.List;
 public class ConsultarPlanService {
 
     private final JpaPlanRepository planRepository;
+    private final PlanMapper planMapper;
 
     @Transactional(readOnly = true)
     public List<PlanResponse> consultarPlanesActivos() {
@@ -25,11 +26,11 @@ public class ConsultarPlanService {
 
         /*
          * Recorre la lista de entidades Plan, transforma cada una en un DTO
-         * PlanResponse usando el método convertirAResponse, y devuelve una nueva lista
+         * PlanResponse usando el mapper convertirAResponse, y devuelve una nueva lista
          * con esos resultados.
          */
         return planesActivos.stream()
-                .map(this::convertirAResponse)
+                .map(planMapper::convertirAResponse)
                 .toList();
     }
 
@@ -39,7 +40,7 @@ public class ConsultarPlanService {
         List<Plan> planes = planRepository.findAll();
 
         return planes.stream()
-                .map(this::convertirAResponse)
+                .map(planMapper::convertirAResponse)
                 .toList();
     }
 
@@ -50,20 +51,7 @@ public class ConsultarPlanService {
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "No se encontró un plan con el ID: " + id));
 
-        return convertirAResponse(plan);
+        return planMapper.convertirAResponse(plan);
     }
 
-    private PlanResponse convertirAResponse(Plan plan) {
-
-        PlanResponse response = new PlanResponse();
-
-        response.setId(plan.getId());
-        response.setNombre(plan.getNombre());
-        response.setDescripcion(plan.getDescripcion());
-        response.setPrecioMensual(plan.getPrecioMensual());
-        response.setActivo(plan.getActivo());
-        response.setBeneficios(new ArrayList<>(plan.getBeneficios()));
-
-        return response;
-    }
 }

@@ -4,6 +4,7 @@ import com.ironempire.dto.request.plan.ModificarPlanRequest;
 import com.ironempire.dto.response.plan.PlanResponse;
 import com.ironempire.exception.RecursoExistenteException;
 import com.ironempire.exception.RecursoNoEncontradoException;
+import com.ironempire.mapper.PlanMapper;
 import com.ironempire.model.Plan;
 import com.ironempire.repository.JpaPlanRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class ModificarPlanService {
 
     private final JpaPlanRepository planRepository;
+    private final PlanMapper planMapper;
 
     @Transactional
     public PlanResponse modificarPlan(Long id, ModificarPlanRequest request) {
@@ -48,14 +50,6 @@ public class ModificarPlanService {
 
         Plan planModificado = planRepository.save(plan);
 
-        PlanResponse response = new PlanResponse();
-        response.setId(planModificado.getId());
-        response.setNombre(planModificado.getNombre());
-        response.setDescripcion(planModificado.getDescripcion());
-        response.setPrecioMensual(planModificado.getPrecioMensual());
-        response.setActivo(planModificado.getActivo());
-        response.setBeneficios(new ArrayList<>(planModificado.getBeneficios()));
-
-        return response;
+        return planMapper.convertirAResponse(planModificado);
     }
 }

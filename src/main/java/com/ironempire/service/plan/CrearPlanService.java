@@ -3,6 +3,7 @@ package com.ironempire.service.plan;
 import com.ironempire.dto.request.plan.CrearPlanRequest;
 import com.ironempire.dto.response.plan.PlanResponse;
 import com.ironempire.exception.RecursoExistenteException;
+import com.ironempire.mapper.PlanMapper;
 import com.ironempire.model.Plan;
 import com.ironempire.repository.JpaPlanRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class CrearPlanService {
 
     private final JpaPlanRepository planRepository;
+    private final PlanMapper planMapper;
 
     @Transactional
     public PlanResponse crearPlan(CrearPlanRequest request) {
@@ -42,14 +44,6 @@ public class CrearPlanService {
 
         Plan planGuardado = planRepository.save(plan);
 
-        PlanResponse response = new PlanResponse();
-        response.setId(planGuardado.getId());
-        response.setNombre(planGuardado.getNombre());
-        response.setDescripcion(planGuardado.getDescripcion());
-        response.setPrecioMensual(planGuardado.getPrecioMensual());
-        response.setActivo(planGuardado.getActivo());
-        response.setBeneficios(planGuardado.getBeneficios());
-
-        return response;
+        return planMapper.convertirAResponse(planGuardado);
     }
 }

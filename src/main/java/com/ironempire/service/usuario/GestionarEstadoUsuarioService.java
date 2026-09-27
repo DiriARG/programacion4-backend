@@ -23,8 +23,40 @@ public class GestionarEstadoUsuarioService {
     private final JpaTurnoRepository turnoRepository;
     private final UsuarioMapper usuarioMapper;
 
+    // Métodos públicos de desactivación.
     @Transactional
-    public UsuarioResponse desactivarUsuario(Long id, Rol rolEsperado, String nombreRecurso) {
+    public UsuarioResponse desactivarAlumno(Long id) {
+        return procesarDesactivacion(id, Rol.ALUMNO, "alumno");
+    }
+
+    @Transactional
+    public UsuarioResponse desactivarProfesor(Long id) {
+        return procesarDesactivacion(id, Rol.PROFESOR, "profesor");
+    }
+
+    @Transactional
+    public UsuarioResponse desactivarAdminGestion(Long id) {
+        return procesarDesactivacion(id, Rol.ADMIN_GESTION, "administrador de gestión");
+    }
+
+    // Métodos públicos de reactivación.
+    @Transactional
+    public UsuarioResponse reactivarAlumno(Long id) {
+        return procesarReactivacion(id, Rol.ALUMNO, "alumno");
+    }
+
+    @Transactional
+    public UsuarioResponse reactivarProfesor(Long id) {
+        return procesarReactivacion(id, Rol.PROFESOR, "profesor");
+    }
+
+    @Transactional
+    public UsuarioResponse reactivarAdminGestion(Long id) {
+        return procesarReactivacion(id, Rol.ADMIN_GESTION, "administrador de gestión");
+    }
+
+    // Métodos privados reutilizables.
+    private UsuarioResponse procesarDesactivacion(Long id, Rol rolEsperado, String nombreRecurso) {
         Usuario usuario = validarUsuarioService.validarUsuario(id, rolEsperado, nombreRecurso);
 
         if (!usuario.getActivo()) {
@@ -39,7 +71,6 @@ public class GestionarEstadoUsuarioService {
          * históricos.
          */
         if (usuario.getRol() == Rol.PROFESOR) {
-
             List<Turno> turnosActivos = turnoRepository.findByProfesorIdAndActivoTrue(usuario.getId());
             /*
              * Se recorren todos los turnos contenidos en la lista turnosActivos.
@@ -57,12 +88,10 @@ public class GestionarEstadoUsuarioService {
         }
 
         Usuario usuarioDesactivado = usuarioRepository.save(usuario);
-
         return usuarioMapper.convertirAResponse(usuarioDesactivado);
     }
 
-    @Transactional
-    public UsuarioResponse reactivarUsuario(Long id, Rol rolEsperado, String nombreRecurso) {
+    private UsuarioResponse procesarReactivacion(Long id, Rol rolEsperado, String nombreRecurso) {
         Usuario usuario = validarUsuarioService.validarUsuario(id, rolEsperado, nombreRecurso);
 
         if (usuario.getActivo()) {
@@ -72,7 +101,6 @@ public class GestionarEstadoUsuarioService {
         usuario.setActivo(true);
 
         Usuario usuarioReactivado = usuarioRepository.save(usuario);
-
         return usuarioMapper.convertirAResponse(usuarioReactivado);
     }
 }

@@ -19,6 +19,7 @@ import com.ironempire.model.Usuario;
 import com.ironempire.repository.JpaPagoRepository;
 import com.ironempire.repository.JpaPlanRepository;
 import com.ironempire.repository.JpaUsuarioRepository;
+import com.ironempire.service.notificacion.PagoRegistradoEvent;
 
 import lombok.RequiredArgsConstructor;
 
@@ -74,7 +75,7 @@ public class RegistrarPagoService {
 
         Pago pagoGuardado = jpaPagoRepository.save(pago);
 
-        eventPublisher.publishEvent(new PagoRegistradoEvent(pagoGuardado.GetId()));
+        eventPublisher.publishEvent(new PagoRegistradoEvent(pagoGuardado.getId()));
 
         return pagoMapper.convertirAResponse(pagoGuardado);  
     

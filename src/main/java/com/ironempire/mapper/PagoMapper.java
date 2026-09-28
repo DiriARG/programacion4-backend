@@ -7,7 +7,7 @@ import com.ironempire.model.Pago;
 
 @Component
 public class PagoMapper {
-    PagoResponse convertirAResponse(Pago pago) {
+    public PagoResponse convertirAResponse(Pago pago) {
 
         PagoResponse response = new PagoResponse();
 

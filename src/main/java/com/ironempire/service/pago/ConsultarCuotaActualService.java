@@ -34,7 +34,7 @@ public class ConsultarCuotaActualService {
                 .getId();
 
         Optional<Pago> ultimoPagoOptional = jpaPagoRepository.findTopByAlumnoIdOrderByFechaVencimientoDesc(alumnoId);
-p
+
         if (ultimoPagoOptional.isEmpty()) {
                 return CuotaActualResponse.sinPlanVigente();
         }

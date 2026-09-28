@@ -20,7 +20,7 @@ public interface JpaPagoRepository extends JpaRepository<Pago, Long> {
     List<Pago> findByAlumnoIdOrderByFechaVencimientoDesc(Long alumnoId);
 
     // RN-79: el plan vgente se determina a partir del último pago registrado
-    Optional<Pago> findTopByAlumnoOrderByFechaVencimientoDesc(Long alumnoId);
+    Optional<Pago> findTopByAlumnoIdOrderByFechaVencimientoDesc(Long alumnoId);
 
     // CU-G-04: pagos dentro de rango de fechas de vencimento
     List<Pago> findByFechaVencimientoBetween(LocalDate desde, LocalDate hasta);

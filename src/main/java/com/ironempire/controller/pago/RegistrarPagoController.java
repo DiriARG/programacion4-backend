@@ -9,7 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
-import org.springframwork.http.ResponseEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,9 +25,9 @@ public class RegistrarPagoController {
 
     // RN-68/RN-72 solo ADMIN_GESTION y ADMIN_GENERAL
     @PostMapping
-    @PreAuthorize("hasAnYRole('ADMIN_GESTION', 'ADMIN_GENERAL')")
+    @PreAuthorize("hasAnyRole('ADMIN_GESTION', 'ADMIN_GENERAL')")
     public ResponseEntity<PagoResponse> registrarPagoService(@Valid @RequestBody RegistrarPagoRequest request) {
-        PagoResponse response = registrarPagoSerice.registrarPago(request);
+        PagoResponse response = registrarPagoService.registrarPago(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);

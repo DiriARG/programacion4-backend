@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+import java.util.List;
 @RestController
 @RequestMapping("/api/pagos")
 @RequiredArgsConstructor
@@ -22,8 +24,8 @@ public class ConsultarHistorialPagosController {
     @GetMapping("mi-historial")
     @PreAuthorize("hasRole('ALUMNO')")
     public ResponseEntity<List<PagoResponse>> consultarMiHistorial(Principal principal) {
-        String mail = principal.getName();
-        return ResponseEntity.ok(consultarHistorialPagosServive.consultaeHistorialPropio(email));
+        String email = principal.getName();
+        return ResponseEntity.ok(consultarHistorialPagosServive.consultarHistorialPago(email));
 
     }
 

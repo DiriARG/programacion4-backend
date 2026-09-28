@@ -15,21 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
-
 @RestController
 @RequestMapping("/api/pagos")
 @RequiredArgsConstructor
 public class ConsultarInformacionFinancieraController {
 
     private final ConsultarInformacionFinancieraService consultarInformacionFinancieraService;
+
     @GetMapping("/financiero")
     @PreAuthorize("hasRole('ADMIN_GENERAL')")
-    public ResponseEntity<InformacionFinancieraResponse> consultarInformacionFinancieraService(
-        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
-        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta) {
-    return ResponseEntity.ok(
-        consultarInformacionFinancieraService.consultarInformacionFinanciera(desde, hasta));
+    public ResponseEntity<InformacionFinancieraResponse> consultarInformacionFinanciera(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate desde,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate hasta) {
+        return ResponseEntity.ok(
+                consultarInformacionFinancieraService.consultarInformacionFinanciera(desde, hasta));
 
-        }
-        
+    }
+
 }

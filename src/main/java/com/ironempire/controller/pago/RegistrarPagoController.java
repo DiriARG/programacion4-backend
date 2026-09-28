@@ -26,7 +26,7 @@ public class RegistrarPagoController {
     // RN-68/RN-72 solo ADMIN_GESTION y ADMIN_GENERAL
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN_GESTION', 'ADMIN_GENERAL')")
-    public ResponseEntity<PagoResponse> registrarPagoService(@Valid @RequestBody RegistrarPagoRequest request) {
+    public ResponseEntity<PagoResponse> registrarPago(@Valid @RequestBody RegistrarPagoRequest request) {
         PagoResponse response = registrarPagoService.registrarPago(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

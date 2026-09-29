@@ -3,6 +3,8 @@ package com.ironempire.repository;
 import com.ironempire.enums.Rol;
 import com.ironempire.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 import java.util.Optional;
 
 // JpaRepository proporciona operaciones básicas para trabajar con la entidad como findById(), findAll(), deleteById(), etc.
@@ -31,4 +33,6 @@ public interface JpaUsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByEmailAndIdNot(String email, Long id);
 
     boolean existsByDniAndIdNot(String dni, Long id);
+
+    List<Usuario> findByRol(Rol rol);
 }

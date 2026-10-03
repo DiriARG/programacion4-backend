@@ -24,5 +24,5 @@ public class TurnoResponse {
     private LocalTime horaInicio;
     private LocalTime horaFin;
     private Boolean activo;
-    private List<AlumnoTurnoResponse> alumnos;
+    private List<AlumnoInscriptoResponse> alumnos;
 }

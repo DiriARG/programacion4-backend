@@ -3,6 +3,7 @@ package com.ironempire.exception;
 import com.ironempire.dto.response.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,14 +33,18 @@ public class GlobalExceptionHandler {
                                 .body(response);
         }
 
-        // Intercepta las excepciones lanzadas cuando falla la anotación @Valid en los
-        // controladores.
+        /*
+         * Intercepta las excepciones lanzadas cuando falla la anotación @Valid en los
+         * controladores.
+         */
         @ExceptionHandler(MethodArgumentNotValidException.class)
         public ResponseEntity<ErrorResponse> manejarErrorValidacion(
                         MethodArgumentNotValidException exception) {
 
-                // "LinkedHashMap" mantiene el orden en el que se procesan las validaciones
-                // fallidas.
+                /*
+                 * "LinkedHashMap" mantiene el orden en el que se procesan las validaciones
+                 * fallidas.
+                 */
                 Map<String, String> errores = new LinkedHashMap<>();
 
                 /*
@@ -119,6 +124,26 @@ public class GlobalExceptionHandler {
                                 HttpStatus.BAD_REQUEST.value(),
                                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                                 exception.getMessage(),
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.BAD_REQUEST)
+                                .body(response);
+        }
+
+        /*
+         * Captura errores de sintaxis y formato en el JSON (ej. valores de Enum
+         * inválidos o tipos de datos incorrectos).
+         */
+        @ExceptionHandler(HttpMessageNotReadableException.class)
+        public ResponseEntity<ErrorResponse> manejarMensajeNoLegible(
+                        HttpMessageNotReadableException exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.BAD_REQUEST.value(),
+                                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                                "El cuerpo de la petición contiene datos con formato o valores inválidos.",
                                 null);
 
                 return ResponseEntity

@@ -25,6 +25,9 @@ public class Turno {
     @JoinColumn(name = "profesor_id", nullable = false)
     private Usuario profesor;
 
+    @Column(name = "nombre_clase", nullable = false, length = 100)
+    private String nombreClase;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "dia_semana", nullable = false)
     private DiaSemana diaSemana;

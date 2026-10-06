@@ -78,4 +78,39 @@ public class GestionarInscripcionTurnoService {
 
         return turnoMapper.convertirAResponse(turno, alumnos);
     }
+
+    @Transactional
+    public TurnoResponse quitarAlumno(Long turnoId, Long alumnoId) {
+
+        Turno turno = turnoRepository.findById(turnoId)
+                .orElseThrow(() -> new RecursoNoEncontradoException("No se encontró un turno con el ID: " + turnoId));
+
+        // La baja solamente puede realizarse sobre un turno activo.
+        if (!turno.getActivo()) {
+            throw new RecursoInvalidoException("El turno se encuentra inactivo.");
+        }
+
+        validarUsuarioService.validarUsuario(alumnoId, Rol.ALUMNO, "alumno");
+
+        // Busca la inscripción existente.
+        AlumnoTurno alumnoTurno = alumnoTurnoRepository.findByAlumnoIdAndTurnoId(
+                alumnoId,
+                turnoId)
+                .orElseThrow(
+                        () -> new RecursoNoEncontradoException("El alumno no se encuentra inscripto en el turno."));
+
+        alumnoTurnoRepository.delete(alumnoTurno);
+
+        List<AlumnoInscriptoResponse> alumnos = alumnoTurnoRepository.findByTurnoId(turnoId)
+                .stream()
+                .map(AlumnoTurno::getAlumno)
+                .map(usuario -> new AlumnoInscriptoResponse(
+                        usuario.getId(),
+                        usuario.getNombre(),
+                        usuario.getApellido(),
+                        usuario.getDni()))
+                .toList();
+
+        return turnoMapper.convertirAResponse(turno, alumnos);
+    }
 }

@@ -8,11 +8,19 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaAlumnoTurnoRepository extends JpaRepository<AlumnoTurno, Long> {
 
   boolean existsByAlumnoIdAndTurnoId(Long alumnoId, Long turnoId);
+
+  /*
+   * Optional permite representar que la inscripción puede no existir y recuperar
+   * la entidad para eliminarla.
+   */
+  Optional<AlumnoTurno> findByAlumnoIdAndTurnoId(Long alumnoId, Long turnoId);
 
   List<AlumnoTurno> findByTurnoId(Long turnoId);
 

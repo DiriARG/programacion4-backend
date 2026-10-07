@@ -24,6 +24,8 @@ public interface JpaAlumnoTurnoRepository extends JpaRepository<AlumnoTurno, Lon
 
   List<AlumnoTurno> findByTurnoId(Long turnoId);
 
+  List<AlumnoTurno> findByAlumnoIdAndTurnoActivoTrue(Long alumnoId);
+
   /*
    * Cuenta cuántos alumnos inscriptos (ALUMNO_TURNO) tienen otro turno activo
    * superpuesto con el nuevo horario.

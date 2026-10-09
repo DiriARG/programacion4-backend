@@ -31,9 +31,9 @@ public class RegistrarAsistenciaService {
     private final AsistenciaMapper asistenciaMapper;
 
     @Transactional
-    public AsistenciaResponse registrarAsistencia(RegistrarAsistenciaRequest request, String emailAutenticado) {
+    public AsistenciaResponse registrarAsistencia(RegistrarAsistenciaRequest request, String email) {
 
-        Usuario usuarioAutenticado = usuarioRepository.findByEmail(emailAutenticado)
+        Usuario usuarioAutenticado = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RecursoNoEncontradoException("No se encontró el usuario autenticado."));
 
         Usuario alumno = validarUsuarioService.validarUsuario(

@@ -35,4 +35,6 @@ public interface JpaUsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByDniAndIdNot(String dni, Long id);
 
     List<Usuario> findByRol(Rol rol);
+
+    List<Usuario> findByRolAndActivoTrue(Rol rol);
 }

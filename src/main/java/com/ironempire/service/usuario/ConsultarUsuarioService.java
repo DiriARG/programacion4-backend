@@ -1,5 +1,6 @@
 package com.ironempire.service.usuario;
 
+import com.ironempire.dto.response.usuario.ProfesorDisponibleResponse;
 import com.ironempire.dto.response.usuario.UsuarioResponse;
 import com.ironempire.enums.Rol;
 import com.ironempire.mapper.UsuarioMapper;
@@ -55,6 +56,19 @@ public class ConsultarUsuarioService {
     @Transactional(readOnly = true)
     public List<UsuarioResponse> consultarAdministradoresGestion() {
         return procesarListado(Rol.ADMIN_GESTION);
+    }
+
+    // Para traer solo profesores activos.
+    @Transactional(readOnly = true)
+    public List<ProfesorDisponibleResponse> consultarProfesoresActivos() {
+
+        return usuarioRepository.findByRolAndActivoTrue(Rol.PROFESOR)
+                .stream()
+                .map(profesor -> new ProfesorDisponibleResponse(
+                        profesor.getId(),
+                        profesor.getNombre(),
+                        profesor.getApellido()))
+                .toList();
     }
 
     private UsuarioResponse procesarConsulta(Long id, Rol rolEsperado, String nombreRecurso) {

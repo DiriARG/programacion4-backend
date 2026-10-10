@@ -58,16 +58,12 @@ public class ConsultarUsuarioService {
         return procesarListado(Rol.ADMIN_GESTION);
     }
 
-    // Para traer solo profesores activos.
     @Transactional(readOnly = true)
     public List<ProfesorDisponibleResponse> consultarProfesoresActivos() {
 
         return usuarioRepository.findByRolAndActivoTrue(Rol.PROFESOR)
                 .stream()
-                .map(profesor -> new ProfesorDisponibleResponse(
-                        profesor.getId(),
-                        profesor.getNombre(),
-                        profesor.getApellido()))
+                .map(usuarioMapper::convertirAProfesorDisponibleResponse)
                 .toList();
     }
 

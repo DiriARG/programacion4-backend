@@ -1,13 +1,16 @@
 package com.ironempire.mapper;
 
+import com.ironempire.dto.response.usuario.ProfesorDisponibleResponse;
 import com.ironempire.dto.response.usuario.UsuarioResponse;
 import com.ironempire.model.Usuario;
 
 import org.springframework.stereotype.Component;
 
 @Component
-/* El "mapper" convierte la entidad Usuario en el DTO UsuarioResponse.
-De esta manera se evita código duplicado en los diferentes servicios. */
+/*
+ * El "mapper" convierte la entidad Usuario en el DTO UsuarioResponse.
+ * De esta manera se evita código duplicado en los diferentes servicios.
+ */
 public class UsuarioMapper {
 
     public UsuarioResponse convertirAResponse(Usuario usuario) {
@@ -22,6 +25,17 @@ public class UsuarioMapper {
         response.setTelefono(usuario.getTelefono());
         response.setRol(usuario.getRol());
         response.setActivo(usuario.getActivo());
+
+        return response;
+    }
+
+    public ProfesorDisponibleResponse convertirAProfesorDisponibleResponse(Usuario usuario) {
+
+        ProfesorDisponibleResponse response = new ProfesorDisponibleResponse();
+
+        response.setId(usuario.getId());
+        response.setNombre(usuario.getNombre());
+        response.setApellido(usuario.getApellido());
 
         return response;
     }

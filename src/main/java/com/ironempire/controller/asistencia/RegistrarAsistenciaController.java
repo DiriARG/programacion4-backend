@@ -1,4 +1,3 @@
-
 package com.ironempire.controller.asistencia;
 
 import com.ironempire.dto.request.asistencia.RegistrarAsistenciaRequest;
@@ -18,17 +17,18 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/api/asistencias")
 @RequiredArgsConstructor
-public class RegistrarAsistenciaAdminController {
+public class RegistrarAsistenciaController {
 
         private final RegistrarAsistenciaService registrarAsistenciaService;
 
         @PostMapping
-        @PreAuthorize("hasAnyRole('ADMIN_GESTION', 'ADMIN_GENERAL')")
+        @PreAuthorize("hasAnyRole('ADMIN_GESTION', 'ADMIN_GENERAL', 'PROFESOR')")
         public ResponseEntity<AsistenciaResponse> registrarAsistencia(
                         @Valid @RequestBody RegistrarAsistenciaRequest request,
                         Principal principal) {
 
                 String email = principal.getName();
+
                 AsistenciaResponse response = registrarAsistenciaService.registrarAsistencia(request, email);
 
                 return ResponseEntity

@@ -1,5 +1,6 @@
 package com.ironempire.mapper;
 
+import com.ironempire.dto.response.asistencia.AsistenciaAlumnoResponse;
 import com.ironempire.dto.response.asistencia.AsistenciaResponse;
 import com.ironempire.model.Asistencia;
 
@@ -23,6 +24,23 @@ public class AsistenciaMapper {
         response.setFecha(asistencia.getFecha());
         response.setHora(asistencia.getHora());
         response.setRegistradoPorId(asistencia.getRegistradoPor().getId());
+        response.setRegistradoPorNombre(asistencia.getRegistradoPor().getNombre());
+        response.setRegistradoPorApellido(asistencia.getRegistradoPor().getApellido());
+
+        return response;
+    }
+
+    public AsistenciaAlumnoResponse convertirAAsistenciaAlumnoResponse(Asistencia asistencia) {
+
+        AsistenciaAlumnoResponse response = new AsistenciaAlumnoResponse();
+
+        response.setFecha(asistencia.getFecha());
+        response.setHora(asistencia.getHora());
+
+        if (asistencia.getTurno() != null) {
+            response.setNombreClase(asistencia.getTurno().getNombreClase());
+        }
+
         response.setRegistradoPorNombre(asistencia.getRegistradoPor().getNombre());
         response.setRegistradoPorApellido(asistencia.getRegistradoPor().getApellido());
 

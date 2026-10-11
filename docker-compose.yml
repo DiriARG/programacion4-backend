@@ -1,0 +1,31 @@
+services:
+  minio:
+    # La imagen minio/minio fue eliminada de Docker Hub (11 septiembre 2026).
+    # Se usa 'pgsty/silo', un fork comunitario 100% compatible con la API y variables de MinIO.
+    image: docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z
+    container_name: iron-empire-minio
+    restart: unless-stopped
+
+    command: server /data --console-address ":9001"
+
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-ironempire_admin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-admin12345}
+
+    volumes:
+      - minio_data:/data
+
+    # Comprueba periódicamente que Silo esté listo para aceptar solicitudes.
+    healthcheck:
+      test: ["CMD", "silo", "healthcheck", "ready"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  minio_data:

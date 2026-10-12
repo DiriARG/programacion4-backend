@@ -13,8 +13,6 @@ import com.ironempire.model.Usuario;
 import com.ironempire.repository.JpaFichaMedicaRepository;
 import com.ironempire.service.usuario.ValidarUsuarioService;
 import com.ironempire.storage.ArchivoStorageService;
-import com.ironempire.storage.MinioStorageService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

@@ -12,6 +12,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
@@ -174,6 +175,41 @@ public class GlobalExceptionHandler {
 
                 return ResponseEntity
                                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body(response);
+        }
+
+        @ExceptionHandler({
+                        ArchivoDemasiadoGrandeException.class,
+                        MaxUploadSizeExceededException.class
+        })
+        public ResponseEntity<ErrorResponse> manejarArchivoDemasiadoGrande(
+                        Exception exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.CONTENT_TOO_LARGE.value(),
+                                HttpStatus.CONTENT_TOO_LARGE.getReasonPhrase(),
+                                "El archivo supera el tamaño máximo permitido.",
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.CONTENT_TOO_LARGE)
+                                .body(response);
+        }
+
+        @ExceptionHandler(TipoArchivoNoSoportadoException.class)
+        public ResponseEntity<ErrorResponse> manejarTipoArchivoNoSoportado(
+                        TipoArchivoNoSoportadoException exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(),
+                                HttpStatus.UNSUPPORTED_MEDIA_TYPE.getReasonPhrase(),
+                                exception.getMessage(),
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
                                 .body(response);
         }
 

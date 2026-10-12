@@ -1,6 +1,9 @@
 package com.ironempire.exception;
 
 import com.ironempire.dto.response.error.ErrorResponse;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -14,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -148,6 +152,28 @@ public class GlobalExceptionHandler {
 
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)
+                                .body(response);
+        }
+
+        /*
+         * Error inesperado al interactuar con el almacenamiento; se responde con HTTP
+         * 500.
+         */
+        @ExceptionHandler(ErrorAlmacenamientoException.class)
+        public ResponseEntity<ErrorResponse> manejarErrorAlmacenamiento(
+                        ErrorAlmacenamientoException exception) {
+
+                log.error("Error al operar con el almacenamiento de archivos.", exception);
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                                "Ocurrió un error al procesar el archivo.",
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.INTERNAL_SERVER_ERROR)
                                 .body(response);
         }
 

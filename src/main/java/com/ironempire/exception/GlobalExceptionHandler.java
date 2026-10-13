@@ -1,6 +1,9 @@
 package com.ironempire.exception;
 
 import com.ironempire.dto.response.error.ErrorResponse;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -9,11 +12,13 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -148,6 +153,63 @@ public class GlobalExceptionHandler {
 
                 return ResponseEntity
                                 .status(HttpStatus.BAD_REQUEST)
+                                .body(response);
+        }
+
+        /*
+         * Error inesperado al interactuar con el almacenamiento; se responde con HTTP
+         * 500.
+         */
+        @ExceptionHandler(ErrorAlmacenamientoException.class)
+        public ResponseEntity<ErrorResponse> manejarErrorAlmacenamiento(
+                        ErrorAlmacenamientoException exception) {
+
+                log.error("Error al operar con el almacenamiento de archivos.", exception);
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                                "Ocurrió un error al procesar el archivo.",
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                .body(response);
+        }
+
+        @ExceptionHandler({
+                        ArchivoDemasiadoGrandeException.class,
+                        MaxUploadSizeExceededException.class
+        })
+        public ResponseEntity<ErrorResponse> manejarArchivoDemasiadoGrande(
+                        Exception exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.CONTENT_TOO_LARGE.value(),
+                                HttpStatus.CONTENT_TOO_LARGE.getReasonPhrase(),
+                                "El archivo supera el tamaño máximo permitido.",
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.CONTENT_TOO_LARGE)
+                                .body(response);
+        }
+
+        @ExceptionHandler(TipoArchivoNoSoportadoException.class)
+        public ResponseEntity<ErrorResponse> manejarTipoArchivoNoSoportado(
+                        TipoArchivoNoSoportadoException exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(),
+                                HttpStatus.UNSUPPORTED_MEDIA_TYPE.getReasonPhrase(),
+                                exception.getMessage(),
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
                                 .body(response);
         }
 

@@ -1,5 +1,6 @@
 package com.ironempire.service.usuario;
 
+import com.ironempire.dto.response.usuario.AlumnoDisponibleResponse;
 import com.ironempire.dto.response.usuario.ProfesorDisponibleResponse;
 import com.ironempire.dto.response.usuario.UsuarioResponse;
 import com.ironempire.enums.Rol;
@@ -58,12 +59,22 @@ public class ConsultarUsuarioService {
         return procesarListado(Rol.ADMIN_GESTION);
     }
 
+    // Solamente activos.
     @Transactional(readOnly = true)
     public List<ProfesorDisponibleResponse> consultarProfesoresActivos() {
 
         return usuarioRepository.findByRolAndActivoTrue(Rol.PROFESOR)
                 .stream()
                 .map(usuarioMapper::convertirAProfesorDisponibleResponse)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<AlumnoDisponibleResponse> consultarAlumnosActivos() {
+
+        return usuarioRepository.findByRolAndActivoTrue(Rol.ALUMNO)
+                .stream()
+                .map(usuarioMapper::convertirAAlumnoDisponibleResponse)
                 .toList();
     }
 

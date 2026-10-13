@@ -18,6 +18,7 @@ public class PagoMapper {
         response.setFechaVencimiento(pago.getFechaVencimiento());
         response.setMetodoPago(pago.getMetodoPago());
         response.setComprobanteKeyMinio(pago.getComprobanteKeyMinio());
+        response.setAnulado(pago.isAnulado());
         return response;
     }
 

@@ -3,6 +3,7 @@ package com.ironempire.exception;
 import com.ironempire.dto.response.error.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -119,6 +120,38 @@ public class GlobalExceptionHandler {
                                 HttpStatus.BAD_REQUEST.value(),
                                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                                 exception.getMessage(),
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.BAD_REQUEST)
+                                .body(response);
+        }
+
+        // Falla el servidor de correo (credenciales, red, etc.).
+        @ExceptionHandler(MailEnvioException.class)
+        public ResponseEntity<ErrorResponse> manejarErrorMail(MailEnvioException exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.BAD_GATEWAY.value(),
+                                HttpStatus.BAD_GATEWAY.getReasonPhrase(),
+                                "No se pudo enviar el correo. Intentá nuevamente más tarde.",
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.BAD_GATEWAY)
+                                .body(response);
+        }
+
+        // JSON mal formado o con un valor de tipo inválido (por ejemplo, una fecha mal escrita).
+        @ExceptionHandler(HttpMessageNotReadableException.class)
+        public ResponseEntity<ErrorResponse> manejarCuerpoIlegible(HttpMessageNotReadableException exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.BAD_REQUEST.value(),
+                                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                                "El cuerpo de la solicitud es inválido o tiene un formato incorrecto.",
                                 null);
 
                 return ResponseEntity

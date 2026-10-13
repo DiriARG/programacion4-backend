@@ -25,7 +25,7 @@ public class ConsultarInformacionFinancieraService {
     @Transactional(readOnly = true)
     public InformacionFinancieraResponse consultarInformacionFinanciera(LocalDate desde, LocalDate hasta) {
 
-        List<Pago> pagosDelPeriodo = jpaPagoRepository.findByFechaVencimientoBetween(desde, hasta);
+        List<Pago> pagosDelPeriodo = jpaPagoRepository.findByFechaVencimientoBetweenAndAnuladoFalse(desde, hasta);
 
         BigDecimal ingresosTotales = pagosDelPeriodo.stream()
                 .map(Pago::getMontoAbonado)

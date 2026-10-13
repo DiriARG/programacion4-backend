@@ -21,7 +21,6 @@ public class PagoResponse {
     private LocalDate fechaVencimiento;
     private String metodoPago;
     private String comprobanteKeyMinio;
-
-
+    private boolean anulado;
 
 }

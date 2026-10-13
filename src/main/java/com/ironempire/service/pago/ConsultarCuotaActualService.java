@@ -21,9 +21,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ConsultarCuotaActualService {
 
-        private static final int DIA_VENCIMIENTO = 10;
         private final JpaPagoRepository jpaPagoRepository;
         private final JpaUsuarioRepository jpaUsuarioRepository;
+        private final CalendarioCuotas calendario;
 
         @Transactional(readOnly = true)
         public CuotaActualResponse consultarCuotaActual(String email) {
@@ -33,8 +33,9 @@ public class ConsultarCuotaActualService {
                                                 "No se encontró el perfil del usuario autenticado."))
                                 .getId();
 
+                // RN-79: el plan vigente sale del último pago no anulado.
                 Optional<Pago> ultimoPagoOptional = jpaPagoRepository
-                                .findTopByAlumnoIdOrderByFechaVencimientoDesc(alumnoId);
+                                .findTopByAlumnoIdAndAnuladoFalseOrderByFechaVencimientoDesc(alumnoId);
 
                 if (ultimoPagoOptional.isEmpty()) {
                         return CuotaActualResponse.sinPlanVigente();
@@ -42,11 +43,12 @@ public class ConsultarCuotaActualService {
 
                 Plan planVigente = ultimoPagoOptional.get().getPlan();
 
-                YearMonth periodoActual = YearMonth.now();
-                LocalDate vencimientoPeriodoActual = periodoActual.atDay(DIA_VENCIMIENTO);
+                YearMonth periodoActual = calendario.periodoActual();
+                LocalDate fechaVencimiento = calendario.vencimientoDe(periodoActual); // fin del período
+                LocalDate fechaLimitePago = calendario.limitePagoDe(periodoActual); // día 10
 
-                Optional<Pago> pagoPeriodoActual = jpaPagoRepository.findByAlumnoIdAndFechaVencimiento(
-                                alumnoId, vencimientoPeriodoActual);
+                Optional<Pago> pagoPeriodoActual = jpaPagoRepository
+                                .findByAlumnoIdAndFechaVencimientoAndAnuladoFalse(alumnoId, fechaVencimiento);
 
                 if (pagoPeriodoActual.isPresent()) {
                         Pago pago = pagoPeriodoActual.get();
@@ -56,10 +58,12 @@ public class ConsultarCuotaActualService {
                                         planVigente.getPrecioMensual(),
                                         pago.getMontoAbonado(),
                                         pago.getFechaPago(),
-                                        pago.getFechaVencimiento(),
+                                        fechaVencimiento,
+                                        fechaLimitePago,
                                         EstadoCuota.PAGADO);
                 }
-                EstadoCuota estado = !LocalDate.now().isAfter(vencimientoPeriodoActual)
+
+                EstadoCuota estado = !calendario.hoy().isAfter(fechaLimitePago)
                                 ? EstadoCuota.PENDIENTE
                                 : EstadoCuota.VENCIDO;
 
@@ -69,7 +73,8 @@ public class ConsultarCuotaActualService {
                                 planVigente.getPrecioMensual(),
                                 null,
                                 null,
-                                vencimientoPeriodoActual,
+                                fechaVencimiento,
+                                fechaLimitePago,
                                 estado);
         }
 }

@@ -42,6 +42,8 @@ public class RegistrarPagoRequest {
     private Integer mesPeriodo;
 
     @NotNull(message = "El año del período es obligatorio")
+    @Min(value = 2000, message = "El año del período no es válido")
+    @Max(value = 2100, message = "El año del período no es válido")
     private Integer anioPeriodo;
 
     @NotBlank(message = "El método de pago es obligatorio")

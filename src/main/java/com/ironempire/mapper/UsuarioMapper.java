@@ -48,6 +48,7 @@ public class UsuarioMapper {
         response.setId(usuario.getId());
         response.setNombre(usuario.getNombre());
         response.setApellido(usuario.getApellido());
+        response.setDni(usuario.getDni());
 
         return response;
     }

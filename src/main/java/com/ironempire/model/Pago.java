@@ -9,6 +9,8 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.ironempire.enums.MetodoPago;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -48,8 +50,9 @@ public class Pago {
     @Column(name = "fecha_vencimiento", nullable = false)
     private LocalDate fechaVencimiento;
 
-    @Column(name = "metodo_pago", length = 50)
-    private String metodoPago;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "metodo_pago", nullable = false, length = 50)
+    private MetodoPago metodoPago;
 
     @Column(name = "comprobante_key_minio")
     private String comprobanteKeyMinio;

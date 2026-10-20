@@ -21,7 +21,7 @@ public class ConsultarAlumnosActivosController {
     private final ConsultarUsuarioService consultarUsuarioService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN_GESTION', 'ADMIN_GENERAL')")
+    @PreAuthorize("hasAnyRole('ADMIN_GESTION', 'ADMIN_GENERAL','PROFESOR')")
     public ResponseEntity<List<AlumnoDisponibleResponse>> consultarAlumnosActivos() {
 
         List<AlumnoDisponibleResponse> response = consultarUsuarioService.consultarAlumnosActivos();

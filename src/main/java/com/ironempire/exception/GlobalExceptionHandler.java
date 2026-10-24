@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -58,7 +59,7 @@ public class GlobalExceptionHandler {
                  */
                 exception.getBindingResult()
                                 .getFieldErrors()
-                                .forEach(error -> errores.put(error.getField(), error.getDefaultMessage()));
+                                .forEach(error -> errores.put(error.getField(), obtenerMensajeValidacion(error)));
 
                 ErrorResponse response = new ErrorResponse(
                                 LocalDateTime.now(),
@@ -211,6 +212,42 @@ public class GlobalExceptionHandler {
                 return ResponseEntity
                                 .status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
                                 .body(response);
+        }
+
+        /*
+         * Genera un mensaje comprensible cuando el valor ingresado para un campo no
+         * puede interpretarse como el tipo de dato esperado.
+         *
+         * Por ejemplo, si se ingresa "abc" en page, una fecha con formato incorrecto o
+         * un estado que no existe en el enum, devuelve un mensaje específico para ese
+         * campo en lugar del mensaje técnico generado por Spring.
+         *
+         * Si el problema corresponde a una validación del DTO, como superar el tamaño
+         * máximo permitido, conserva el mensaje definido en la anotación.
+         */
+        private String obtenerMensajeValidacion(FieldError error) {
+
+                // Comprueba si el valor ingresado no pudo convertirse al tipo de dato esperado.
+                if (error.isBindingFailure()) {
+                        return switch (error.getField()) {
+                                case "estado" ->
+                                        "El estado debe ser VIGENTE o VENCIDA.";
+
+                                case "fechaVencimientoDesde", "fechaVencimientoHasta" ->
+                                        "La fecha debe tener el formato AAAA-MM-DD.";
+
+                                case "page" ->
+                                        "El parámetro page debe ser un número entero.";
+
+                                case "size" ->
+                                        "El parámetro size debe ser un número entero.";
+
+                                default ->
+                                        "El valor ingresado para el campo no tiene un formato válido.";
+                        };
+                }
+
+                return error.getDefaultMessage();
         }
 
 }

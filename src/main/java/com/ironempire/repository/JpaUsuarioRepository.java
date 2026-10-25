@@ -3,6 +3,8 @@ package com.ironempire.repository;
 import com.ironempire.enums.Rol;
 import com.ironempire.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,4 +39,18 @@ public interface JpaUsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByRol(Rol rol);
 
     List<Usuario> findByRolAndActivoTrue(Rol rol);
+
+    @Query("""
+            SELECT u
+            FROM Usuario u
+            WHERE u.rol = :rol
+              AND NOT EXISTS (
+                  SELECT f.id
+                  FROM FichaMedica f
+                  WHERE f.alumno.id = u.id
+              )
+            ORDER BY u.apellido ASC, u.nombre ASC, u.id ASC
+            """)
+    List<Usuario> findUsuariosSinFichaMedicaPorRol(
+            @Param("rol") Rol rol);
 }

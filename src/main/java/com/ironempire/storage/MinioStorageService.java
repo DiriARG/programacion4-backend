@@ -1,6 +1,7 @@
 package com.ironempire.storage;
 
 import io.minio.GetObjectArgs;
+import io.minio.GetObjectResponse;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import io.minio.RemoveObjectArgs;
@@ -55,14 +56,18 @@ public class MinioStorageService {
         }
     }
 
-    public InputStream descargarArchivo(String nombreObjeto) {
+    public ArchivoDescargado descargarArchivo(String nombreObjeto) {
 
         try {
-            return minioClient.getObject(
+            GetObjectResponse respuesta = minioClient.getObject(
                     GetObjectArgs.builder()
                             .bucket(bucket)
                             .object(nombreObjeto)
                             .build());
+
+            String tipoContenido = respuesta.headers().get("Content-Type");
+
+            return new ArchivoDescargado(respuesta, tipoContenido);
 
         } catch (Exception exception) {
             throw new ErrorAlmacenamientoException(

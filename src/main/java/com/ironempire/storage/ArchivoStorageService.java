@@ -84,6 +84,10 @@ public class ArchivoStorageService {
         }
     }
 
+    public ArchivoDescargado descargarArchivo(String nombreObjeto) {
+        return minioStorageService.descargarArchivo(nombreObjeto);
+    }
+
     public void eliminarArchivo(String nombreObjeto) {
         minioStorageService.eliminarArchivo(nombreObjeto);
     }

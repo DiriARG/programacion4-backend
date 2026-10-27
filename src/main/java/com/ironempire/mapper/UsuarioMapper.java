@@ -1,5 +1,6 @@
 package com.ironempire.mapper;
 
+import com.ironempire.dto.response.fichamedica.AlumnoSinFichaMedicaResponse;
 import com.ironempire.dto.response.usuario.AlumnoDisponibleResponse;
 import com.ironempire.dto.response.usuario.ProfesorDisponibleResponse;
 import com.ironempire.dto.response.usuario.UsuarioResponse;
@@ -44,6 +45,18 @@ public class UsuarioMapper {
     public AlumnoDisponibleResponse convertirAAlumnoDisponibleResponse(Usuario usuario) {
 
         AlumnoDisponibleResponse response = new AlumnoDisponibleResponse();
+
+        response.setId(usuario.getId());
+        response.setNombre(usuario.getNombre());
+        response.setApellido(usuario.getApellido());
+        response.setDni(usuario.getDni());
+
+        return response;
+    }
+
+    public AlumnoSinFichaMedicaResponse convertirAAlumnoSinFichaMedicaResponse(Usuario usuario) {
+
+        AlumnoSinFichaMedicaResponse response = new AlumnoSinFichaMedicaResponse();
 
         response.setId(usuario.getId());
         response.setNombre(usuario.getNombre());

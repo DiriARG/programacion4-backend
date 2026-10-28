@@ -29,4 +29,7 @@ public class Ejercicio {
 
     @Column(name = "imagen_key_minio")
     private String imagenKeyMinio;
+
+    @Column(nullable = false)
+    private Boolean activo;
 }

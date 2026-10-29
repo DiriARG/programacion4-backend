@@ -1,6 +1,7 @@
 package com.ironempire.mapper;
 
 import com.ironempire.dto.response.rutina.RutinaEjercicioResponse;
+import com.ironempire.dto.response.rutina.RutinaListadoResponse;
 import com.ironempire.dto.response.rutina.RutinaResponse;
 import com.ironempire.model.Ejercicio;
 import com.ironempire.model.Rutina;
@@ -61,6 +62,23 @@ public class RutinaMapper {
         response.setPeso(rutinaEjercicio.getPeso());
         response.setDiaSemana(rutinaEjercicio.getDiaSemana());
         response.setOrden(rutinaEjercicio.getOrden());
+
+        return response;
+    }
+
+    public RutinaListadoResponse convertirAListadoResponse(Rutina rutina) {
+
+        RutinaListadoResponse response = new RutinaListadoResponse();
+
+        response.setId(rutina.getId());
+
+        response.setAlumnoNombre(rutina.getAlumno().getNombre());
+        response.setAlumnoApellido(rutina.getAlumno().getApellido());
+        response.setAlumnoDni(rutina.getAlumno().getDni());
+
+        response.setNombre(rutina.getNombre());
+        response.setFechaCreacion(rutina.getFechaCreacion());
+        response.setActiva(rutina.getActiva());
 
         return response;
     }

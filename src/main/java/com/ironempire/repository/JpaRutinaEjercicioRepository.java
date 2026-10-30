@@ -7,5 +7,5 @@ import java.util.List;
 public interface JpaRutinaEjercicioRepository extends JpaRepository<RutinaEjercicio, Long> {
     // List permite obtener múltiples elementos en forma de lista, en este caso los
     // ejercicios de una rutina que cumplen la consulta.
-    List<RutinaEjercicio> findByRutinaIdOrderByOrdenAsc(Long rutinaId);
+    List<RutinaEjercicio> findByRutinaId(Long rutinaId);
 }

@@ -24,4 +24,5 @@ public class RutinaEjercicioResponse {
     private BigDecimal peso;
     private DiaSemana diaSemana;
     private Integer orden;
+    private String imagenUrl;
 }

@@ -63,6 +63,17 @@ public class RutinaMapper {
         response.setDiaSemana(rutinaEjercicio.getDiaSemana());
         response.setOrden(rutinaEjercicio.getOrden());
 
+        /*
+         * Se genera la URL de la imagen del ejercicio del catálogo. Si no existe una
+         * imagen, imagenUrl permanece en null.
+         */
+        if (ejercicio.getImagenKeyMinio() != null
+                && !ejercicio.getImagenKeyMinio().isBlank()) {
+
+            response.setImagenUrl(
+                    "/api/ejercicios/" + ejercicio.getId() + "/imagen");
+        }
+
         return response;
     }
 

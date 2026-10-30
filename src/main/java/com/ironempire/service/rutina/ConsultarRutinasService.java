@@ -37,14 +37,15 @@ public class ConsultarRutinasService {
             String email) {
 
         Usuario profesor = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RecursoNoEncontradoException( "No se encontró el usuario autenticado."));
+                .orElseThrow(() -> new RecursoNoEncontradoException("No se encontró el usuario autenticado."));
 
         if (profesor.getRol() != Rol.PROFESOR) {
             throw new RecursoInvalidoException("El usuario autenticado no es un profesor.");
         }
 
- 
-        Specification<Rutina> specification = RutinaSpecification.conFiltros(filtros, profesor.getId());
+        Specification<Rutina> specification = RutinaSpecification.conFiltros(filtros)
+                .and(RutinaSpecification.visiblesParaProfesor(
+                        profesor.getId()));
 
         Sort orden = Sort.by(
                 Sort.Order.desc("fechaCreacion"),

@@ -23,8 +23,7 @@ public final class RutinaSpecification {
     }
 
     public static Specification<Rutina> conFiltros(
-            ConsultarRutinasRequest filtros,
-            Long profesorId) {
+            ConsultarRutinasRequest filtros) {
 
         return (root, query, cb) -> {
 
@@ -82,9 +81,19 @@ public final class RutinaSpecification {
                                 '\\')));
             }
 
-            /* Primer subconsulta: asociación mediante una rutina.
-            Se comprueba si existe alguna rutina del mismo alumno que haya sido creada por el profesor autenticado.
-            Además el alumno puede tener otras rutinas creadas por otros profesores. */ 
+            return cb.and(predicados.toArray(new Predicate[0]));
+        };
+    }
+
+    public static Specification<Rutina> visiblesParaProfesor(Long profesorId) {
+
+        return (root, query, cb) -> {
+
+            /*
+             * Primer subconsulta: asociación mediante una rutina.
+             * Se comprueba si existe alguna rutina del mismo alumno que haya sido creada
+             * por el profesor autenticado.
+             */
             Subquery<Long> subconsultaRutina = query.subquery(Long.class);
 
             // Entidad que se consultará dentro de la subconsulta.
@@ -101,8 +110,11 @@ public final class RutinaSpecification {
                                     rutinaAsociada.get("profesor").get("id"),
                                     profesorId));
 
-            /* Segunda subconsulta: asociación mediante turno.
-            Se comprueba si existe alguna inscripción del mismo alumno a un turno dictado por el profesor autenticado. */                        
+            /*
+             * Segunda subconsulta: asociación mediante turno.
+             * Se comprueba si existe alguna inscripción del mismo alumno a un turno dictado
+             * por el profesor autenticado.
+             */
             Subquery<Long> subconsultaTurno = query.subquery(Long.class);
 
             Root<AlumnoTurno> inscripcion = subconsultaTurno.from(AlumnoTurno.class);
@@ -120,12 +132,10 @@ public final class RutinaSpecification {
                                             .get("id"),
                                     profesorId));
 
-            predicados.add(
-                    cb.or(
-                            cb.exists(subconsultaRutina),
-                            cb.exists(subconsultaTurno)));
-
-            return cb.and(predicados.toArray(new Predicate[0]));
+            // El alumno está asociado si cumple cualquiera de las dos condiciones.
+            return cb.or(
+                    cb.exists(subconsultaRutina),
+                    cb.exists(subconsultaTurno));
         };
     }
 

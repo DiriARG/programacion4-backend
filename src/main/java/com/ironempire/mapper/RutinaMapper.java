@@ -6,6 +6,8 @@ import com.ironempire.dto.response.rutina.RutinaResponse;
 import com.ironempire.model.Ejercicio;
 import com.ironempire.model.Rutina;
 import com.ironempire.model.RutinaEjercicio;
+
+import java.util.Comparator;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -32,8 +34,15 @@ public class RutinaMapper {
         response.setFechaCreacion(rutina.getFechaCreacion());
         response.setActiva(rutina.getActiva());
 
+        /*
+         * Ordena los ejercicios por día de la semana y orden de ejecución antes de
+         * convertirlos a su respectivo DTO.
+         */
         response.setEjercicios(
                 ejercicios.stream()
+                        .sorted(Comparator
+                                .comparing(RutinaEjercicio::getDiaSemana)
+                                .thenComparing(RutinaEjercicio::getOrden))
                         .map(this::convertirAEjercicioResponse)
                         .toList());
 

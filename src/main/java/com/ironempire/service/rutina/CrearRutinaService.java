@@ -16,7 +16,6 @@ import com.ironempire.repository.JpaRutinaRepository;
 import com.ironempire.repository.JpaUsuarioRepository;
 import com.ironempire.service.usuario.ValidarUsuarioService;
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -41,7 +40,8 @@ public class CrearRutinaService {
 
         Usuario profesor = usuarioRepository.findByEmail(email)
                 .orElseThrow(
-                        () -> new RecursoNoEncontradoException("No se encontró el perfil del profesor autenticado."));
+                        () -> new RecursoNoEncontradoException(
+                                "No se encontró el perfil del profesor autenticado."));
 
         if (profesor.getRol() != Rol.PROFESOR) {
             throw new RecursoInvalidoException("El usuario autenticado no es un profesor.");
@@ -77,7 +77,8 @@ public class CrearRutinaService {
             Ejercicio ejercicio = ejerciciosPorId.get(ejercicioId);
 
             if (ejercicio == null) {
-                throw new RecursoNoEncontradoException("No se encontró un ejercicio con el ID: " + ejercicioId);
+                throw new RecursoNoEncontradoException(
+                        "No se encontró un ejercicio con el ID: " + ejercicioId);
             }
 
             if (!Boolean.TRUE.equals(ejercicio.getActivo())) {
@@ -108,7 +109,10 @@ public class CrearRutinaService {
 
         Rutina rutinaGuardada = rutinaRepository.save(nuevaRutina);
 
-        // Construye una asociación RutinaEjercicio por cada ejercicio recibido en la petición.
+        /*
+         * Construye una asociación RutinaEjercicio por cada ejercicio recibido en la
+         * petición.
+         */
         List<RutinaEjercicio> asociaciones = request.getEjercicios()
                 .stream()
                 .map(ejercicioRequest -> {
@@ -129,16 +133,8 @@ public class CrearRutinaService {
 
         List<RutinaEjercicio> asociacionesGuardadas = rutinaEjercicioRepository.saveAll(asociaciones);
 
-        // Ordena los ejercicios por día y por orden de ejecución.
-        List<RutinaEjercicio> asociacionesOrdenadas = asociacionesGuardadas
-                .stream()
-                .sorted(Comparator
-                        .comparing(RutinaEjercicio::getDiaSemana)
-                        .thenComparing(RutinaEjercicio::getOrden))
-                .toList();
-
         return rutinaMapper.convertirAResponse(
                 rutinaGuardada,
-                asociacionesOrdenadas);
+                asociacionesGuardadas);
     }
 }

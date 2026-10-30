@@ -19,7 +19,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -57,13 +56,7 @@ public class ConsultarRutinaService {
                         "No se encontró una rutina con el ID indicado."));
 
         // Recupera los ejercicios asociados a la rutina.
-        List<RutinaEjercicio> ejercicios = rutinaEjercicioRepository
-                .findByRutinaId(rutinaId)
-                .stream()
-                .sorted(Comparator
-                        .comparing(RutinaEjercicio::getDiaSemana)
-                        .thenComparing(RutinaEjercicio::getOrden))
-                .toList();
+        List<RutinaEjercicio> ejercicios = rutinaEjercicioRepository.findByRutinaId(rutinaId);
 
         return rutinaMapper.convertirAResponse(rutina, ejercicios);
     }

@@ -19,30 +19,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ConsultarCertificadoController {
 
-        private final ConsultarCertificadoService consultarCertificadoService;
+    private final ConsultarCertificadoService consultarCertificadoService;
 
-        @GetMapping("/{fichaMedicaId}/certificado")
-        @PreAuthorize("hasAnyRole('ADMIN_GESTION', 'ADMIN_GENERAL')")
-        public ResponseEntity<Resource> consultarCertificado(
-                        @PathVariable Long fichaMedicaId) {
+    @GetMapping("/{fichaMedicaId}/certificado")
+    @PreAuthorize("hasAnyRole('ADMIN_GESTION', 'ADMIN_GENERAL')")
+    public ResponseEntity<Resource> consultarCertificado(@PathVariable Long fichaMedicaId) {
 
-                ArchivoDescargado archivo = consultarCertificadoService.obtenerCertificado(fichaMedicaId);
+        ArchivoDescargado archivo = consultarCertificadoService.obtenerCertificado(fichaMedicaId);
 
-                return ResponseEntity.ok()
-                                .contentType(MediaType.parseMediaType(archivo.tipoContenido()))
-                                /*
-                                 * Le indica al navegador que intente mostrar el archivo en vez de forzar su
-                                 * descarga.
-                                 */
-                                .header(HttpHeaders.CONTENT_DISPOSITION, "inline")
-                                // Evita almacenar el certificado en caché.
-                                .header(HttpHeaders.CACHE_CONTROL, "no-store")
-                                /*
-                                 * Evita que el navegador intente interpretar el contenido como otro tipo de
-                                 * archivo.
-                                 */
-                                .header("X-Content-Type-Options", "nosniff")
-                                // Devuelve el contenido del archivo mediante un flujo de datos.
-                                .body(new InputStreamResource(archivo.contenido()));
-        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(archivo.tipoContenido()))
+                /*
+                 * Le indica al navegador que intente mostrar el archivo en vez de forzar su
+                 * descarga.
+                 */
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline")
+                // Evita almacenar el certificado en caché.
+                .header(HttpHeaders.CACHE_CONTROL, "no-store")
+                /*
+                 * Evita que el navegador intente interpretar el contenido como otro tipo de
+                 * archivo.
+                 */
+                .header("X-Content-Type-Options", "nosniff")
+                // Devuelve el contenido del archivo mediante un flujo de datos.
+                .body(new InputStreamResource(archivo.contenido()));
+    }
 }

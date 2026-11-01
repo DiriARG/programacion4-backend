@@ -61,6 +61,10 @@ public class ModificarRutinaService {
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "No se encontró una rutina con el ID indicado."));
 
+        if (!Boolean.TRUE.equals(rutina.getActiva())) {
+            throw new RecursoInvalidoException(
+                    "No se puede modificar una rutina inactiva.");
+        }
         /*
          * Recupera las asociaciones actuales entre la rutina y los ejercicios del
          * catálogo.

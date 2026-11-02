@@ -52,11 +52,18 @@ public class CrearRutinaService {
                 Rol.ALUMNO,
                 "alumno");
 
+        if (!Boolean.TRUE.equals(alumno.getActivo())) {
+            throw new RecursoInvalidoException(
+                    "No se puede crear una rutina para un alumno inactivo.");
+        }
+
         // Obtiene los identificadores de los ejercicios solicitados.
         List<Long> ejercicioIds = request.getEjercicios().stream()
                 .map(ejercicio -> ejercicio.getEjercicioId())
-                // Se elimina los IDs repetidos de la lista (1 mismo ejercicio en dos días
-                // diferentes).
+                /*
+                 * Se elimina los IDs repetidos de la lista (1 mismo ejercicio en dos días
+                 * diferentes).
+                 */
                 .distinct()
                 .toList();
 

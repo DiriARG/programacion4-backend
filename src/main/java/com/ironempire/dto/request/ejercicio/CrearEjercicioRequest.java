@@ -20,9 +20,8 @@ public class CrearEjercicioRequest {
 
     @NotBlank(message = "El grupo muscular es obligatorio.")
     @Size(max = 50, message = "El grupo muscular no puede superar los 50 caracteres.")
-    
     private String grupoMuscular;
-    
+
     private String descripcion;
 
     private MultipartFile imagen;

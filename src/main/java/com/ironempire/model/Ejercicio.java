@@ -18,10 +18,10 @@ public class Ejercicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100, unique = true)
     private String nombre;
 
-    @Column(name = "grupo_muscular", nullable = false)
+    @Column(name = "grupo_muscular", nullable = false, length = 50)
     private String grupoMuscular;
 
     @Column(columnDefinition = "TEXT")

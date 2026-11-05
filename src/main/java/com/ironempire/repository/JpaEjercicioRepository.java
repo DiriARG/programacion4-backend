@@ -8,5 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaEjercicioRepository extends JpaRepository<Ejercicio, Long> {
     boolean existsByNombreIgnoreCase(String nombre);
+    boolean existsByNombreIgnoreCaseAndIdNot(String nombre, Long id);
     List<Ejercicio> findByActivoTrueOrderByNombreAscIdAsc();
 }

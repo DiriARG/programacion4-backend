@@ -13,6 +13,15 @@ import java.time.LocalTime;
 public interface JpaAsistenciaRepository extends JpaRepository<Asistencia, Long>, JpaSpecificationExecutor<Asistencia> {
   List<Asistencia> findByAlumnoIdOrderByFechaDescHoraDesc(Long alumnoId);
 
+  @Query("""
+      SELECT DISTINCT a.alumno.id
+      FROM Asistencia a
+      WHERE a.fecha BETWEEN :desde AND :hasta
+      """)
+  List<Long> findAlumnoIdsConAsistenciaEntre(
+      @Param("desde") LocalDate desde,
+      @Param("hasta") LocalDate hasta);
+
   /**
    * Verifica si ya existe una asistencia registrada para el alumno
    * en la fecha indicada dentro del rango de tiempo de ese mismo minuto.

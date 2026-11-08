@@ -1,22 +1,20 @@
 package com.ironempire.dto.request.pago;
 
-import com.ironempire.enums.MetodoPago;
-
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotNull;
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.math.BigDecimal;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.time.LocalDate;
-import java.time.YearMonth;
+import java.math.BigDecimal;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+
 
 @Getter
 @Setter
@@ -24,34 +22,33 @@ import java.time.YearMonth;
 @AllArgsConstructor
 public class RegistrarPagoRequest {
 
-    @NotNull(message = "El alumno es obligatorio")
+    @NotNull (message = "El alumno es obligatorio")
     private Long alumnoId;
 
-    @NotNull(message = "El plan es obligatorio")
+    @NotNull (message = "El plan es obligatorio")
     private Long planId;
 
-    @NotNull(message = "El monto abonado es obligatorio")
-
-    @DecimalMin(value = "0.01", message = "El monto abonado debe ser como mínimo 0,01")
-    @Digits(integer = 8, fraction = 2, message = "El monto abonado debe tener como máximo 8 dígitos enteros y 2 decimales")
+    @NotNull (message = "El monto abonado es obligatorio")
+    @Positive (message = "El monto abonado debe ser mayor a cero")
+    @Digits (integer = 8, fraction = 2, message = "El monto  debe tener como máximo 8 dígitos enteros y 2 decimales")
     private BigDecimal montoAbonado;
 
-    @NotNull(message = "La fecha de pago es obligatoria")
-    /*
-     * Se utiliza @DateTimeFormat porque al ser una petición multipart/form-data
-     * (por incluir el comprobante), Spring procesa los campos como formulario
-     * y no asume el estándar ISO por defecto (a diferencia del formato JSON).
-     */
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @NotNull (message = "La fecha de pago es obligatoria")
     private LocalDate fechaPago;
 
-    @NotNull(message = "El período de la cuota es obligatorio")
-    // Recibe el período como año-mes: uuuu-MM, por ejemplo 2026-08.
-    @DateTimeFormat(pattern = "uuuu-MM")
-    private YearMonth periodo;
+    @NotNull (message = "El mes del período es obligatorio")
+    @Min(value = 1, message = "El mes del período debe estar entre 1 y 12")
+    @Max(value = 12, message = "El mes del período debe estar entre 1 y 12")
+    private Integer mesPeriodo;
 
-    @NotNull(message = "El método de pago es obligatorio")
-    private MetodoPago metodoPago;
+    @NotNull(message = "El año del período es obligatorio")
+    @Min(value = 2000, message = "El año del período no es válido")
+    @Max(value = 2100, message = "El año del período no es válido")
+    private Integer anioPeriodo;
 
-    private MultipartFile comprobante;
+    @NotBlank(message = "El método de pago es obligatorio")
+    @Size(max = 50, message = "El método de pago no puede tener más de 50 caracteres")
+    private String metodoPago;
+    private String comprobanteKeyMinio;
+
 }

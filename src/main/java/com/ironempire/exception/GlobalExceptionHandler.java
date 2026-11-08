@@ -137,6 +137,21 @@ public class GlobalExceptionHandler {
                                 .body(response);
         }
 
+        @ExceptionHandler(MailEnvioException.class)
+        public ResponseEntity<ErrorResponse> manejarErrorMail(MailEnvioException exception) {
+
+                ErrorResponse response = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.BAD_GATEWAY.value(),
+                                HttpStatus.BAD_GATEWAY.getReasonPhrase(),
+                                "No se pudo enviar el correo. Intentá nuevamente más tarde.",
+                                null);
+
+                return ResponseEntity
+                                .status(HttpStatus.BAD_GATEWAY)
+                                .body(response);
+        }
+
         /*
          * Captura errores de sintaxis y formato en el JSON (ej. valores de Enum
          * inválidos o tipos de datos incorrectos).

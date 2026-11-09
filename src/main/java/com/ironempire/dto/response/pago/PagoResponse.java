@@ -16,6 +16,16 @@ public class PagoResponse {
 
     private Long id;
     private String planNombre;
+    
+    // Datos del alumno para la tabla y el modal de anulación
+    private String nombreAlumno;
+    private String apellidoAlumno;
+    private String dniAlumno;
+
+    // Período
+    private Integer mesPeriodo;
+    private Integer anioPeriodo;
+
     private BigDecimal montoAbonado;
     private LocalDate fechaPago;
     private LocalDate fechaVencimiento;

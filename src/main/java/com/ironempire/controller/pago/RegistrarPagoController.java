@@ -3,11 +3,8 @@ package com.ironempire.controller.pago;
 import com.ironempire.dto.request.pago.RegistrarPagoRequest;
 import com.ironempire.dto.response.pago.PagoResponse;
 import com.ironempire.service.pago.RegistrarPagoService;
-
 import jakarta.validation.Valid;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegistrarPagoController {
 
     private final RegistrarPagoService registrarPagoService;
- RN-68/RN-72 solo ADMIN_GESTION y ADMIN_GENERAL
+ //RN-68/RN-72 solo ADMIN_GESTION y ADMIN_GENERAL
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN_GESTION', 'ADMIN_GENERAL')")
     public ResponseEntity<PagoResponse> registrarPago(@Valid @RequestBody RegistrarPagoRequest request) {

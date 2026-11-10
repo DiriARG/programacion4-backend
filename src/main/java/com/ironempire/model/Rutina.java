@@ -28,7 +28,7 @@ public class Rutina {
     @JoinColumn(name = "profesor_id", nullable = false)
     private Usuario profesor;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String nombre;
 
     @Column(name = "fecha_creacion", nullable = false)

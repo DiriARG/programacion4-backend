@@ -1,0 +1,296 @@
+[
+  {
+    "nombre": "Press de banca plano con barra",
+    "grupoMuscular": "Pecho",
+    "descripcion": "Ejercicio de empuje horizontal realizado acostado en un banco plano con una barra.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Press inclinado con mancuernas",
+    "grupoMuscular": "Pecho",
+    "descripcion": "Ejercicio de empuje realizado en un banco inclinado con mancuernas.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Press inclinado con barra",
+    "grupoMuscular": "Pecho",
+    "descripcion": "Ejercicio de empuje de pecho realizado en un banco inclinado con una barra.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Aperturas con mancuernas",
+    "grupoMuscular": "Pecho",
+    "descripcion": "Ejercicio de aislamiento del pecho que consiste en abrir y cerrar los brazos con mancuernas.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Cruce de poleas",
+    "grupoMuscular": "Pecho",
+    "descripcion": "Ejercicio de aislamiento realizado cruzando los brazos frente al cuerpo mediante poleas.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Flexiones de brazos",
+    "grupoMuscular": "Pecho",
+    "descripcion": "Ejercicio con peso corporal que consiste en flexionar y extender los brazos apoyando las manos en el suelo.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Jalón al pecho en polea",
+    "grupoMuscular": "Espalda",
+    "descripcion": "Ejercicio de tracción vertical que consiste en llevar una barra desde arriba hacia el pecho.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Remo con barra",
+    "grupoMuscular": "Espalda",
+    "descripcion": "Ejercicio de tracción horizontal realizado inclinando el torso y llevando la barra hacia el abdomen.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Remo unilateral con mancuerna",
+    "grupoMuscular": "Espalda",
+    "descripcion": "Ejercicio de tracción realizado con una mancuerna y un brazo por vez.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Remo sentado en polea",
+    "grupoMuscular": "Espalda",
+    "descripcion": "Ejercicio de tracción horizontal realizado sentado, llevando el agarre hacia el torso.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Dominadas",
+    "grupoMuscular": "Espalda",
+    "descripcion": "Ejercicio con peso corporal que consiste en elevar el cuerpo suspendido de una barra.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Pullover en polea",
+    "grupoMuscular": "Espalda",
+    "descripcion": "Ejercicio de extensión de hombros realizado con polea para trabajar principalmente los dorsales.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Press militar con barra",
+    "grupoMuscular": "Hombros",
+    "descripcion": "Ejercicio de empuje vertical que consiste en elevar una barra desde los hombros por encima de la cabeza.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Elevaciones laterales con mancuernas",
+    "grupoMuscular": "Hombros",
+    "descripcion": "Ejercicio de aislamiento que consiste en elevar los brazos hacia los costados con mancuernas.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Elevaciones frontales con mancuernas",
+    "grupoMuscular": "Hombros",
+    "descripcion": "Ejercicio de aislamiento que consiste en elevar las mancuernas hacia adelante.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Pájaros con mancuernas",
+    "grupoMuscular": "Hombros",
+    "descripcion": "Ejercicio de aislamiento enfocado en la parte posterior de los hombros.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Face pull en polea",
+    "grupoMuscular": "Hombros",
+    "descripcion": "Ejercicio de tracción hacia el rostro que trabaja los hombros posteriores y la musculatura escapular.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Curl de bíceps con barra",
+    "grupoMuscular": "Bíceps",
+    "descripcion": "Ejercicio de flexión de codos realizado con una barra para trabajar los bíceps.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Curl alternado con mancuernas",
+    "grupoMuscular": "Bíceps",
+    "descripcion": "Ejercicio de flexión de codos que alterna un brazo y luego el otro.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Curl martillo",
+    "grupoMuscular": "Bíceps",
+    "descripcion": "Ejercicio de flexión de codos con agarre neutro que trabaja los bíceps y el braquial.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Curl de bíceps en banco Scott",
+    "grupoMuscular": "Bíceps",
+    "descripcion": "Ejercicio de flexión de codos realizado con los brazos apoyados en un banco Scott.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Extensión de tríceps en polea con barra",
+    "grupoMuscular": "Tríceps",
+    "descripcion": "Ejercicio de extensión de codos realizado empujando una barra hacia abajo en una polea.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Extensión de tríceps con cuerda",
+    "grupoMuscular": "Tríceps",
+    "descripcion": "Ejercicio de extensión de codos con cuerda en polea alta.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Press francés",
+    "grupoMuscular": "Tríceps",
+    "descripcion": "Ejercicio de extensión de codos realizado con barra o mancuernas, generalmente acostado en un banco.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Fondos en paralelas",
+    "grupoMuscular": "Tríceps",
+    "descripcion": "Ejercicio con peso corporal que consiste en flexionar y extender los codos sosteniendo el cuerpo entre barras paralelas.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Sentadilla con barra",
+    "grupoMuscular": "Piernas",
+    "descripcion": "Ejercicio multiarticular que consiste en flexionar y extender las caderas y rodillas con una barra.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Prensa de piernas a 45 grados",
+    "grupoMuscular": "Piernas",
+    "descripcion": "Ejercicio realizado en una prensa inclinada, empujando una plataforma con los pies.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Extensión de cuádriceps en máquina",
+    "grupoMuscular": "Piernas",
+    "descripcion": "Ejercicio de extensión de rodillas realizado sentado en una máquina.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Curl femoral sentado",
+    "grupoMuscular": "Piernas",
+    "descripcion": "Ejercicio de flexión de rodillas realizado en una máquina para trabajar los isquiotibiales.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Peso muerto rumano",
+    "grupoMuscular": "Piernas",
+    "descripcion": "Ejercicio de bisagra de cadera realizado con barra o mancuernas, enfocado en la cadena posterior.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Zancadas con mancuernas",
+    "grupoMuscular": "Piernas",
+    "descripcion": "Ejercicio unilateral que consiste en dar un paso y flexionar ambas rodillas con mancuernas.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Sentadilla búlgara",
+    "grupoMuscular": "Piernas",
+    "descripcion": "Ejercicio unilateral de piernas realizado con el pie posterior apoyado en un banco.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Hip thrust con barra",
+    "grupoMuscular": "Glúteos",
+    "descripcion": "Ejercicio de extensión de cadera realizado con la espalda apoyada en un banco y una carga sobre la pelvis.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Puente de glúteos",
+    "grupoMuscular": "Glúteos",
+    "descripcion": "Ejercicio de extensión de cadera realizado acostado boca arriba, elevando la pelvis.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Patada de glúteo en polea",
+    "grupoMuscular": "Glúteos",
+    "descripcion": "Ejercicio de extensión de cadera realizado llevando una pierna hacia atrás contra la resistencia de una polea.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Abducción de cadera en máquina",
+    "grupoMuscular": "Glúteos",
+    "descripcion": "Ejercicio realizado separando las piernas contra la resistencia de una máquina.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Elevación de talones de pie",
+    "grupoMuscular": "Pantorrillas",
+    "descripcion": "Ejercicio que consiste en elevar los talones para trabajar los músculos de la pantorrilla.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Elevación de talones sentado",
+    "grupoMuscular": "Pantorrillas",
+    "descripcion": "Ejercicio de elevación de talones realizado sentado, con resistencia sobre los muslos.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Crunch abdominal",
+    "grupoMuscular": "Abdomen",
+    "descripcion": "Ejercicio abdominal que consiste en elevar ligeramente el torso mediante la flexión de la columna.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Elevación de piernas",
+    "grupoMuscular": "Abdomen",
+    "descripcion": "Ejercicio abdominal que consiste en elevar las piernas controladamente desde una posición acostada o suspendida.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Plancha abdominal",
+    "grupoMuscular": "Abdomen",
+    "descripcion": "Ejercicio isométrico que consiste en mantener el cuerpo alineado apoyado sobre los antebrazos y los pies.",
+    "imagenKeyMinio": null,
+    "activo": true
+  },
+  {
+    "nombre": "Giros rusos",
+    "grupoMuscular": "Abdomen",
+    "descripcion": "Ejercicio de rotación del torso realizado sentado, con los pies apoyados o elevados según la variante.",
+    "imagenKeyMinio": null,
+    "activo": true
+  }
+]

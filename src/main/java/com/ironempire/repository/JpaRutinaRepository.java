@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface JpaRutinaRepository extends JpaRepository<Rutina, Long>, JpaSpecificationExecutor<Rutina> {
     Optional<Rutina> findByAlumnoIdAndActivaTrue(Long alumnoId);
+
+    boolean existsByAlumnoIdAndActivaTrue(Long alumnoId);
 }

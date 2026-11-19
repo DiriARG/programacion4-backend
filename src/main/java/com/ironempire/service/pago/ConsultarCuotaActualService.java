@@ -33,7 +33,6 @@ public class ConsultarCuotaActualService {
                                                 "No se encontró el perfil del usuario autenticado."))
                                 .getId();
 
-                // RN-79: el plan vigente sale del último pago no anulado.
                 Optional<Pago> ultimoPagoOptional = jpaPagoRepository
                                 .findTopByAlumnoIdAndAnuladoFalseOrderByFechaVencimientoDesc(alumnoId);
 

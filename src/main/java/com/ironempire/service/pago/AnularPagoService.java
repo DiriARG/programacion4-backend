@@ -38,7 +38,6 @@ public class AnularPagoService {
                 .orElseThrow(() -> new RecursoNoEncontradoException(
                         "No se encontró el perfil del usuario autenticado."));
 
-        // Anulación lógica: el registro se conserva (RN-25).
         pago.setAnulado(true);
         pago.setFechaAnulacion(calendario.ahora());
         pago.setMotivoAnulacion(request.getMotivo().trim());

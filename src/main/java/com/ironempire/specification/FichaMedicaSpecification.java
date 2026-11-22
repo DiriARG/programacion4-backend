@@ -51,8 +51,7 @@ public final class FichaMedicaSpecification {
             if (filtros.getAlumno() != null
                     && !filtros.getAlumno().isBlank()) {
 
-                String texto = escaparCaracteresLike(
-                        filtros.getAlumno().trim().toLowerCase(Locale.ROOT));
+                String texto = escaparCaracteresLike(filtros.getAlumno().trim().toLowerCase(Locale.ROOT));
 
                 String patron = "%" + texto + "%";
 
@@ -69,6 +68,14 @@ public final class FichaMedicaSpecification {
                                 '\\'),
                         cb.like(
                                 cb.lower(alumno.<String>get("dni")),
+                                patron,
+                                '\\'),
+                        cb.like(
+                                cb.concat(
+                                        cb.concat(
+                                                cb.lower(alumno.<String>get("nombre")),
+                                                " "),
+                                        cb.lower(alumno.<String>get("apellido"))),
                                 patron,
                                 '\\')));
             }

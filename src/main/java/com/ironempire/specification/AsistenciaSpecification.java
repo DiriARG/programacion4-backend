@@ -57,19 +57,21 @@ public final class AsistenciaSpecification {
             if (filtros.getAlumno() != null
                     && !filtros.getAlumno().isBlank()) {
 
-                String texto = escaparCaracteresLike(
-                        filtros.getAlumno().trim().toLowerCase(Locale.ROOT));
+                String texto = escaparCaracteresLike(filtros.getAlumno().trim().toLowerCase(Locale.ROOT));
 
-                // Los "%" permiten buscar el texto en cualquier parte del nombre, apellido o DNI.
+                /*
+                 * Los "%" permiten buscar el texto en cualquier parte del nombre, apellido o
+                 * DNI.
+                 */
                 String patron = "%" + texto + "%";
 
                 // Une la asistencia con su alumno para poder buscar por sus datos personales.
                 Join<Asistencia, Usuario> alumno = root.join("alumno", JoinType.INNER);
 
                 /*
-                 * Busca el texto en nombre, apellido o DNI. Se usa "or" porque basta
-                 * con que coincida uno de los tres campos, y "like" permite coincidencias
-                 * parciales.
+                 * Busca el texto en nombre, apellido, DNI o nombre completo del alumno. Se usa
+                 * "or" porque basta con que coincida uno de los tres campos, y "like" permite
+                 * coincidencias parciales.
                  */
                 predicados.add(cb.or(
                         cb.like(
@@ -82,6 +84,16 @@ public final class AsistenciaSpecification {
                                 '\\'),
                         cb.like(
                                 cb.lower(alumno.<String>get("dni")),
+                                patron,
+                                '\\'),
+                        cb.like(
+                                cb.concat(
+                                        cb.concat(
+                                                cb.lower(alumno.<String>get(
+                                                        "nombre")),
+                                                " "),
+                                        cb.lower(alumno.<String>get(
+                                                "apellido"))),
                                 patron,
                                 '\\')));
             }
@@ -124,7 +136,10 @@ public final class AsistenciaSpecification {
 
         return (root, query, cb) -> {
 
-            // Se usa "LEFT JOIN" para conservar las asistencias sin turno (entrenamientos libres).
+            /*
+             * Se usa "LEFT JOIN" para conservar las asistencias sin turno (entrenamientos
+             * libres).
+             */
             Join<Asistencia, Turno> turno = root.join("turno", JoinType.LEFT);
 
             Join<Turno, Usuario> profesorDelTurno = turno.join("profesor", JoinType.LEFT);

@@ -37,8 +37,10 @@ public final class RutinaSpecification {
                                 filtros.getActiva()));
             }
 
-            // Busca por nombre de rutina, nombre del alunmo, apellido, DNI o nombre
-            // completo.
+            /*
+             * Busca por nombre de rutina, nombre del alumno, apellido, DNI o nombre
+             * completo.
+             */
             if (filtros.getBusqueda() != null
                     && !filtros.getBusqueda().isBlank()) {
 
@@ -69,14 +71,13 @@ public final class RutinaSpecification {
                                 patron,
                                 '\\'),
                         cb.like(
-                                cb.lower(
+                                cb.concat(
                                         cb.concat(
-                                                cb.concat(
-                                                        cb.lower(alumno.<String>get(
-                                                                "nombre")),
-                                                        " "),
                                                 cb.lower(alumno.<String>get(
-                                                        "apellido")))),
+                                                        "nombre")),
+                                                " "),
+                                        cb.lower(alumno.<String>get(
+                                                "apellido"))),
                                 patron,
                                 '\\')));
             }

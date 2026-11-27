@@ -1,6 +1,7 @@
 package com.ironempire.dto.request.asistencia;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class RegistrarAsistenciaRequest {
     private Long turnoId;
 
     @NotNull(message = "La fecha de la asistencia es obligatoria")
+    @PastOrPresent(message = "La fecha de la asistencia no puede ser posterior a la fecha actual.")
     private LocalDate fecha;
 
     @NotNull(message = "La hora de la asistencia es obligatoria")
